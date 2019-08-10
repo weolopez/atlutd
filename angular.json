@@ -3,33 +3,32 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "atlutd": {
+    "cabal": {
       "projectType": "application",
-      "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/cabal",
+      "sourceRoot": "projects/cabal/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "public",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "index": "projects/cabal/src/index.html",
+            "main": "projects/cabal/src/main.ts",
+            "polyfills": "projects/cabal/src/polyfills.ts",
+            "tsConfig": "projects/cabal/tsconfig.app.json",
+            "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/ngx-auth-firebaseui/assets/",
-                "output": "./assets/"
-              }
+              "projects/cabal/src/favicon.ico",
+              "projects/cabal/src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "projects/cabal/src/styles.scss"
             ],
             "scripts": []
           },
@@ -37,8 +36,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/cabal/src/environments/environment.ts",
+                  "with": "projects/cabal/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -68,33 +67,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "atlutd:build"
+            "browserTarget": "cabal:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "atlutd:build:production"
+              "browserTarget": "cabal:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "atlutd:build"
+            "browserTarget": "cabal:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/cabal/src/test.ts",
+            "polyfills": "projects/cabal/src/polyfills.ts",
+            "tsConfig": "projects/cabal/tsconfig.spec.json",
+            "karmaConfig": "projects/cabal/karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/cabal/src/favicon.ico",
+              "projects/cabal/src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "projects/cabal/src/styles.scss"
             ],
             "scripts": []
           }
@@ -103,9 +102,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "projects/cabal/tsconfig.app.json",
+              "projects/cabal/tsconfig.spec.json",
+              "projects/cabal/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -115,12 +114,12 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "atlutd:serve"
+            "protractorConfig": "projects/cabal/e2e/protractor.conf.js",
+            "devServerTarget": "cabal:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "atlutd:serve:production"
+              "devServerTarget": "cabal:serve:production"
             }
           }
         }
