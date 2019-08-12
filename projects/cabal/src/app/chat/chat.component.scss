@@ -1,4 +1,4 @@
-.chat {
+app-chat {
   padding: 10px;
   margin: 70px auto 100px;
   width: 100%;
@@ -7,11 +7,11 @@
 .msg {
   display: flex;
   align-items: flex-start;
-  margin-left: auto;
+  // margin-left: autos;
   order: 2;
   text-align: left;
-  border-bottom: 1px solid #e9e9e9;
-  padding: 10px;
+  // border-bottom: 1px solid #e9e9e9;
+  padding: 5px;
   width: 90vw;
   font-size: 1.3em;
   animation-delay: 0ms;
@@ -24,15 +24,8 @@
   }
 }
 
-.example-form-field {
-  padding-left: 15px;
-  font-size: 18px;
-  position: fixed;
-  bottom: -21px;
-  left: 0;
-  width: 95%;
-  color: black;
-  padding-bottom: 0px;
+#chatlist {
+  height: 83vh;
 }
 
 .top {
@@ -42,6 +35,18 @@
   width: 100%;
   height: 70px;
   padding: 20px 10vw;
-  background: rgba(255, 255, 255, 0.8);
+  // background: rgba(255, 255, 255, 0.8);
   z-index: 99;
+}
+.example-form-field {
+  padding-left: 0;
+  font-size: 18px;
+  // position: absolute;
+  // z-index: 2;
+  // bottom: -30px;
+  left: 0;
+  width: 100%;
+  background: #303030;
+  color: gold;
+  padding-bottom: 0px;
 }

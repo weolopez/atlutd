@@ -1,50 +1,37 @@
-<ng-container *ngIf="chat$ | async as chat">
-  <ng-container *ngIf=" auth.user$ | async as user">
-<!--
-    <div class="top">
-      <p><a class="tag" routerLink="/">Back</a>
+<div *ngIf="chat$ | async as chat">
+  <div *ngIf=" auth.user$ | async as user">
+
+    <!-- <div class="top"> -->
+      <!-- <p><a class="tag" routerLink="/">Back</a>
         <span class="tag is-success">
           https://firestore-megachat.firebaseapp.com/chats/{{ chat.id }}
         </span>
-      </p>
-    </div> -->
-
-
-    <!-- <div #chatBox class="chat">
-      <div class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
-        <div class="user">
-          <img [src]="msg.user?.photoURL || 'assets/unicorn.svg'" width="50px">
-          <div><span class="tag is-dark">{{ msg.user?.displayName || msg.user?.uid }}</span></div>
-          <button *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="button is-danger is-small" (click)="cs.deleteMessage(chat, msg)">Delete</button>
-        </div>
-        <p>{{ msg.content }}</p>
-      </div>
-    </div> -->
-
-    <mat-list #scrollList id="chatlist" cdkScrollable>
-      <mat-list-item *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+      </p> -->
+    <!-- </div> -->
+    <mat-list #chatBox class="chat">
+      <mat-list-item class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
         <img matListAvatar [src]="msg.user?.photoURL || 'assets/unicorn.svg'" alt="...">
-        <!-- <h3 matLine>{{ msg.user?.displayName || msg.user?.uid }}</h3> -->
         <p matLine>
           <span>{{ msg.content }}</span>
         </p>
-        <!-- <p matLine>
-          <span class="demo-2">{{message | json}}</span>
-        </p> -->
+      </mat-list-item>
+    </mat-list>
+    <mat-form-field class="example-form-field">
+        <input matInput #newMsg type="text">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="submit(newMsg.value);newMsg.value=''" class="button is-info">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+  </div>
+</div>
+
+<!-- <mat-list #scrollList id="chatlist" cdkScrollable>
+      <mat-list-item *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+        <img matListAvatar [src]="msg.user?.photoURL || 'assets/unicorn.svg'" alt="...">
+        <p matLine>
+          <span>{{ msg.content }}</span>
+        </p>
       </mat-list-item>
     </mat-list>
 
-    <mat-form-field class="example-form-field"><input matInput [(ngModel)]="newMsg" (keydown.enter)="submit(chat.id)">
-      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="submit(chat.id)" class="button is-info" [disabled]="!newMsg">
-        <mat-icon>send</mat-icon>
-      </button>
-    </mat-form-field>
-
-
-    <!-- <div class="form">
-      <input class="input" [(ngModel)]="newMsg" maxlength="100" (keydown.enter)="submit(chat.id)">
-      <button (click)="submit(chat.id)" class="button is-info" [disabled]="!newMsg">Send</button>
-    </div> -->
-
-  </ng-container>
-</ng-container>
+    -->

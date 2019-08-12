@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { ChatService } from './services/chat.service';
 import { AuthProcessService } from 'ngx-auth-firebaseui';
@@ -12,12 +12,13 @@ export class AppComponent {
   title = 'atlutd';
   public loggedIn = false;
   public showProviders = false;
-
   constructor(
-              public afAuth: AuthProcessService
+      public cs: ChatService,
+      public afAuth: AuthProcessService
     ) {
       afAuth.afa.user.subscribe(event => {
         this.loggedIn = (!event) ? false : true;
       });
   }
+
 }

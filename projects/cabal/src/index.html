@@ -6,20 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Atlutd</title>
     <base href="/">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+    <!-- <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" /> -->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
       #cdk-overlay-0 > div > div > div:nth-child(2) > button {
-          visibility: hidden;
+          /* visibility: hidden; */
       }
       body {
         margin: 0;
+      }
+      a {
+        color: white;
       }
     </style>
   </head>
   <body>
     <app-root></app-root>
+    <script>
+      setTimeout(function(){
+		// Hide the address bar!
+		window.scrollTo(0, 1);
+	}, 0);
+    </script>
   </body>
 </html>

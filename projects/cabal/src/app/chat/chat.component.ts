@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { MatList } from '@angular/material';
-// import { CdkScrollable } from '@angular/cdk/scrolling';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-chat',
@@ -15,29 +15,34 @@ import { MatList } from '@angular/material';
 export class ChatComponent implements OnInit {
   chat$: Observable<any>;
   newMsg: string;
-  // @ViewChild('scrollList', {static: false}) scrollList: CdkScrollable;
+  scrollList;
+  // @ViewChild('scrollList', {static: false}) scrollList; // : CdkScrollable;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
     public auth: AuthService
-  ) {}
-
-  ngOnInit() {
-    const chatId = this.route.snapshot.paramMap.get('id');
-    const source = this.cs.get(chatId);
-    this.chat$ = this.cs.joinUsers(source); // .pipe(tap(v => this.scrollBottom(v)));
+  ) {
+    this.scrollList = document.getElementById('scrollList');
   }
 
-  submit(chatId) {
-    if (!this.newMsg) {
-      return alert('you need to enter something');
-    }
-    this.cs.sendMessage(chatId, this.newMsg);
-    this.newMsg = '';
-    // this.scrollList.scrollTo({bottom: 0});
+  ngOnInit() {
+    // this.scrollList = this.scrollList.nativeElement;
+    const chatId = this.route.snapshot.paramMap.get('id');
+    const source = this.cs.get(chatId);
+    this.chat$ = this.cs.joinUsers(source)
+       .pipe(tap(v => this.scroll()));
+  }
+
+  submit(newMsg) {
+    this.cs.sendMessage(newMsg);
+    this.scroll();
   }
 
   trackByCreated(i, msg) {
     return msg.createdAt;
+  }
+  scroll() {
+    const objDiv = document.getElementById('scrollList');
+    objDiv.scrollTop = objDiv.scrollHeight;
   }
 }

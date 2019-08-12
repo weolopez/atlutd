@@ -88,6 +88,8 @@ MIT
 
 @angular/fire/auth
 
+@angular/fire/auth-guard
+
 @angular/fire/firestore
 
 @angular/fire/storage
@@ -406,6 +408,8 @@ Apache-2.0
 
 @firebase/webchannel-wrapper
 Apache-2.0
+
+atlutd
 
 core-js
 MIT
