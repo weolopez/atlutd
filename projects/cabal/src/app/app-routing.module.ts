@@ -8,6 +8,10 @@ import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 const redirectLoggedInToItems = redirectUnauthorizedTo(['home']);
 
 const routes: Routes = [
+  { path: 'edit',
+    loadChildren: () => import('./page/teams/teams.module').then(m => m.TeamsModule),
+    ...canActivate(redirectLoggedInToItems)
+  },
   { path: 'user',
     loadChildren: () => import('./page/user/user.module').then(m => m.UserModule),
     ...canActivate(redirectLoggedInToItems)
