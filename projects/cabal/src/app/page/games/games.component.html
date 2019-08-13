@@ -1,0 +1,13 @@
+<mat-list>
+  <a [routerLink]="'/game'" *ngFor="let message of items | async">
+
+    <mat-list-item>
+      <img matListAvatar [src]="message.homeURL" alt="...">
+      <h1 class="team" matLine> {{message.home}} </h1>
+    </mat-list-item>
+    <mat-list-item>
+      <img matListAvatar [src]="message.awayURL" alt="...">
+      <h1 class="team" matLine> {{message.away}} </h1>
+    </mat-list-item>
+  </a>
+</mat-list>
