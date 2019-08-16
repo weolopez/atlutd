@@ -21,6 +21,7 @@ export class TeamsComponent implements OnInit {
   private itemDoc: AngularFirestoreDocument<Item>;
   public items: Observable<any[]>;
   public collection;
+  public open = '';
   constructor(
     private route: ActivatedRoute,
     private db: AngularFirestore) {
@@ -30,21 +31,15 @@ export class TeamsComponent implements OnInit {
     this.collection = this.route.snapshot.paramMap.get('collection');
     this.items = this.get();
   }
-  update(uid, data) {
-    this.db.collection(this.collection).doc(uid)
-      .update(this.updateData(data)).finally( () =>
-        this.items = this.get()
-      );
-  }
-  add(data) {
-    this.db.collection(this.collection)
-    .add(this.updateData(data));
-  }
-  updateData(value) {
-    return {
-      content: JSON.parse(value),
-      createdAt: Date.now()
-    };
+  update(data) {
+    const d = JSON.parse(data);
+    if (d.id) {
+      this.db.collection(this.collection).doc(d.id)
+        .set(d).finally(() => location.reload());
+    } else {
+      this.db.collection(this.collection)
+        .add(d).finally(() => location.reload());
+    }
   }
   get() {
     return this.db
@@ -54,8 +49,7 @@ export class TeamsComponent implements OnInit {
         map(collection =>
            collection.map( doc => {
             return {
-               id: doc.payload.doc.id,
-               payload: doc.payload.doc.data().content
+               payload: doc.payload.doc.data()
             };
           })
         )
@@ -63,6 +57,7 @@ export class TeamsComponent implements OnInit {
   }
   delete(id) {
     return this.db
-    .collection<any>(this.collection).doc(id).delete();
+    .collection<any>(this.collection).doc(id)
+      .delete().finally(() => location.reload());
   }
 }

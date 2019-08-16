@@ -5,16 +5,16 @@
       <label>New {{collection}}</label>
       <!-- <mat-icon (click)="newMessage.value=''" style="float: right">delete</mat-icon> -->
     </mat-list-item>
-    <textarea #newMessage (blur)="add(newMessage.value)" [hidden]="open!=='new'" class="source" matInput
-      [placeholder]="json"></textarea>
+    <textarea #newMessage (blur)="update(newMessage.value)" [hidden]="open!=='new'" class="source" matInput
+      placeholder="json"></textarea>
   </div>
   <div *ngFor="let message of items | async; index as i">
     <mat-list-item>
       <mat-icon (click)="open = (open!==i) ? i : ''" style="float: left">more_vert</mat-icon>
-      <label>{{message.id}}</label>
-      <mat-icon (click)="delete(message.id)" style="float: right">delete</mat-icon>
+      <label>{{message.payload.id}}</label>
+      <mat-icon (click)="delete(message.payload.id)" style="float: right">delete</mat-icon>
     </mat-list-item>
-    <textarea #messageInput (blur)="update(message.id, messageInput.value)" [hidden]="open!==i" class="source" matInput
+    <textarea #messageInput (blur)="update(messageInput.value)" [hidden]="open!==i" class="source" matInput
       [placeholder]="i" [value]="message.payload | json"></textarea>
   </div>
 </div>

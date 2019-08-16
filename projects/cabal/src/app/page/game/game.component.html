@@ -1,12 +1,12 @@
 <mat-list>
-  <div *ngFor="let message of items | async">
+  <div>
     <mat-list-item>
-      <img matListAvatar [src]="message.content.homeURL" alt="...">
-      <h1 class="team" matLine> {{message.content.home}} </h1>
+      <img matListAvatar [src]="message.homeURL" alt="...">
+      <h1 class="team" matLine> {{message.home}} </h1>
     </mat-list-item>
     <mat-list-item>
-      <img matListAvatar [src]="message.content.awayURL" alt="...">
-      <h1 class="team" matLine> {{message.content.away}} </h1>
+      <img matListAvatar [src]="message.awayURL" alt="...">
+      <h1 class="team" matLine> {{message.away}} </h1>
     </mat-list-item>
  
     <div fxLayout="column">
@@ -27,6 +27,46 @@
         <div>
           <p class="red">Seat</p>
           <p class="gold">3,4</p>
+        </div>
+      </div>
+    </div><div fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="space-around center ">
+          <img class="memberURL" src="https://lh4.googleusercontent.com/-wXVHOgfVhp4/AAAAAAAAAAI/AAAAAAAADAM/sWNxzE3S9kA/photo.jpg" alt="...">
+        <div>
+          <p class="red">Member</p>
+          <p class="gold">Mauricio</p>
+        </div>
+        <div>
+          <p class="red">Section</p>
+          <p class="gold">130</p>
+        </div>
+        <div>
+          <p class="red">Row</p>
+          <p class="gold">15</p>
+        </div>
+        <div>
+          <p class="red">Seat</p>
+          <p class="gold">5,6</p>
+        </div>
+      </div>
+    </div><div fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="space-around center ">
+          <img class="memberURL" src="https://lh4.googleusercontent.com/-wXVHOgfVhp4/AAAAAAAAAAI/AAAAAAAADAM/sWNxzE3S9kA/photo.jpg" alt="...">
+        <div>
+          <p class="red">Member</p>
+          <p class="gold">Mauricio</p>
+        </div>
+        <div>
+          <p class="red">Section</p>
+          <p class="gold">130</p>
+        </div>
+        <div>
+          <p class="red">Row</p>
+          <p class="gold">15</p>
+        </div>
+        <div>
+          <p class="red">Seat</p>
+          <p class="gold">7,8</p>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { PollModule } from './page/poll/poll.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ChatComponent } from './chat/chat.component';
@@ -8,6 +9,10 @@ import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 const redirectLoggedInToItems = redirectUnauthorizedTo(['home']);
 
 const routes: Routes = [
+  { path: 'poll',
+    loadChildren: () => import('./page/poll/poll.module').then(m => m.PollModule),
+    ...canActivate(redirectLoggedInToItems)
+  },
   { path: 'edit',
     loadChildren: () => import('./page/teams/teams.module').then(m => m.TeamsModule),
     ...canActivate(redirectLoggedInToItems)
@@ -16,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./page/user/user.module').then(m => m.UserModule),
     ...canActivate(redirectLoggedInToItems)
   },
-  { path: 'game',
+  { path: 'games/:id',
     loadChildren: () => import('./page/game/game.module').then(m => m.GameModule),
     ...canActivate(redirectLoggedInToItems)
   },

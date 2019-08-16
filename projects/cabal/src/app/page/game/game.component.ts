@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 export interface Item { name: string; }
 @Component({
@@ -11,9 +12,15 @@ export interface Item { name: string; }
 export class GameComponent implements OnInit {
 
   private itemDoc: AngularFirestoreDocument<Item>;
-  public items: Observable<any[]>;
-  constructor(db: AngularFirestore) {
-    this.items = db.collection('games').valueChanges();
+  public message: any;
+  constructor(
+    private route: ActivatedRoute,
+    private db: AngularFirestore) {
+      const chatId = this.route.snapshot.paramMap.get('id');
+      this.db.collection('games').doc(chatId).snapshotChanges().subscribe( doc => {
+        // tslint:disable-next-line:no-string-literal
+        this.message = doc.payload.data()['content'];
+      });
   }
 
   ngOnInit() {
