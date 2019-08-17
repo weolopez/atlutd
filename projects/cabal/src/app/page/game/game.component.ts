@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { FireService } from '../../services/fire.service';
+import { AuthService } from '../../services/auth.service';
 
 export interface Item { name: string; }
 @Component({
@@ -12,18 +14,31 @@ export interface Item { name: string; }
 export class GameComponent implements OnInit {
 
   private itemDoc: AngularFirestoreDocument<Item>;
-  public message: any;
+  public items: any;
+  public seatPick: any;
+  public Obj = Object;
+  public id;
+  public user;
   constructor(
-    private route: ActivatedRoute,
-    private db: AngularFirestore) {
-      const chatId = this.route.snapshot.paramMap.get('id');
-      this.db.collection('games').doc(chatId).snapshotChanges().subscribe( doc => {
-        // tslint:disable-next-line:no-string-literal
-        this.message = doc.payload.data()['content'];
-      });
+      private route: ActivatedRoute,
+      private db: AngularFirestore,
+      private auth: AuthService,
+      private fs: FireService
+    ) {
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.items = fs.deepGetDoc('games', this.id);
+      this.getUser();
   }
 
   ngOnInit() {
   }
-
+  select(seat) {
+    const game = {};
+    game[`seats.${seat}.owner`] = '_users$' + this.user.uid;
+    this.db.collection('games').doc(this.id)
+      .update(game);
+  }
+  async getUser() {
+    this.user = await this.auth.getUser();
+  }
 }

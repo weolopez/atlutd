@@ -13,12 +13,13 @@ export class AppComponent {
   public loggedIn = false;
   public showProviders = false;
   constructor(
-      public cs: ChatService,
-      public afAuth: AuthProcessService
-    ) {
-      afAuth.afa.user.subscribe(event => {
-        this.loggedIn = (!event) ? false : true;
-      });
+    public cs: ChatService,
+    public afAuth: AuthProcessService,
+    public auth: AuthService
+  ) {
+    auth.getUser().then(event => {
+      this.loggedIn = (!event) ? false : true;
+    });
   }
 
 }

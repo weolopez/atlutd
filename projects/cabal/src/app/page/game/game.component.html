@@ -1,73 +1,65 @@
 <mat-list>
-  <div>
-    <mat-list-item>
-      <img matListAvatar [src]="message.homeURL" alt="...">
-      <h1 class="team" matLine> {{message.home}} </h1>
+  <div *ngIf="items | async as game">
+    <h1>{{game.id}}</h1>
+    <mat-list-item *ngIf="game.home | async as home">
+      <img matListAvatar [src]="home.image" alt="...">
+      <h1 class="team" matLine> {{home.name}} </h1>
     </mat-list-item>
-    <mat-list-item>
-      <img matListAvatar [src]="message.awayURL" alt="...">
-      <h1 class="team" matLine> {{message.away}} </h1>
+    <mat-list-item *ngIf="game.away | async as away">
+      <img matListAvatar [src]="away.image">
+      <h1 class="team" matLine> {{away.name}} </h1>
     </mat-list-item>
- 
+
     <div fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="space-around center ">
-          <img class="memberURL" src="https://lh4.googleusercontent.com/-wXVHOgfVhp4/AAAAAAAAAAI/AAAAAAAADAM/sWNxzE3S9kA/photo.jpg" alt="...">
-        <div>
-          <p class="red">Member</p>
-          <p class="gold">Mauricio</p>
+      <div *ngFor="let key of Obj.keys(game.seats)">
+        <div *ngIf="game.seats[key].owner | async as owner; else unassigned ">
+          <div *ngIf="game.seats[key].seats | async as s">
+            <div fxLayout="row" fxLayoutAlign="space-around center">
+              <img class="memberURL" [src]="owner.photoURL" alt="...">
+              <div>
+                <p class="red">Member</p>
+                <p class="gold">{{ owner.displayName }}</p>
+              </div>
+              <div>
+                <p class="red">Section</p>
+                <p class="gold">{{s.Section}}</p>
+              </div>
+              <div>
+                <p class="red">Row</p>
+                <p class="gold">{{s.Row}}</p>
+              </div>
+              <div>
+                <p class="red">Seat</p>
+                <p class="gold">{{s.Seat}}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <p class="red">Section</p>
-          <p class="gold">130</p>
-        </div>
-        <div>
-          <p class="red">Row</p>
-          <p class="gold">15</p>
-        </div>
-        <div>
-          <p class="red">Seat</p>
-          <p class="gold">3,4</p>
-        </div>
-      </div>
-    </div><div fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="space-around center ">
-          <img class="memberURL" src="https://lh4.googleusercontent.com/-wXVHOgfVhp4/AAAAAAAAAAI/AAAAAAAADAM/sWNxzE3S9kA/photo.jpg" alt="...">
-        <div>
-          <p class="red">Member</p>
-          <p class="gold">Mauricio</p>
-        </div>
-        <div>
-          <p class="red">Section</p>
-          <p class="gold">130</p>
-        </div>
-        <div>
-          <p class="red">Row</p>
-          <p class="gold">15</p>
-        </div>
-        <div>
-          <p class="red">Seat</p>
-          <p class="gold">5,6</p>
-        </div>
-      </div>
-    </div><div fxLayout="column">
-      <div fxLayout="row" fxLayoutAlign="space-around center ">
-          <img class="memberURL" src="https://lh4.googleusercontent.com/-wXVHOgfVhp4/AAAAAAAAAAI/AAAAAAAADAM/sWNxzE3S9kA/photo.jpg" alt="...">
-        <div>
-          <p class="red">Member</p>
-          <p class="gold">Mauricio</p>
-        </div>
-        <div>
-          <p class="red">Section</p>
-          <p class="gold">130</p>
-        </div>
-        <div>
-          <p class="red">Row</p>
-          <p class="gold">15</p>
-        </div>
-        <div>
-          <p class="red">Seat</p>
-          <p class="gold">7,8</p>
-        </div>
+        <ng-template #unassigned>
+            <div *ngIf="game.seats[key].seats | async as s">
+              <div fxLayout="row" fxLayoutAlign="space-around center">
+                <button mat-button
+                  *ngIf="true" (click)="select(key, game)"
+                   >Select</button>
+                <div>
+                  <p class="red">Member</p>
+                  <p class="gold">Unassigned</p>
+                </div>
+                <div>
+                  <p class="red">Section</p>
+                  <p class="gold">{{s.Section}}</p>
+                </div>
+                <div>
+                  <p class="red">Row</p>
+                  <p class="gold">{{s.Row}}</p>
+                </div>
+                <div>
+                  <p class="red">Seat</p>
+                  <p class="gold">{{s.Seat}}</p>
+                </div>
+              </div>
+            </div>
+        </ng-template>
       </div>
     </div>
   </div>
