@@ -31,6 +31,8 @@ export class ChatComponent implements OnInit {
     const source = this.cs.get(chatId);
     this.chat$ = this.cs.joinUsers(source)
        .pipe(tap(v => this.scroll()));
+
+    // this.userChats$ = this.cs.getUserChats();
   }
 
   submit(newMsg) {

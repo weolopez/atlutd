@@ -13,7 +13,7 @@ export interface Item { name: string; }
 export class UserComponent implements OnInit {
 
   public currentUser = { uid: '', photoURL: '', displayName: '',
-    email: '', date: '', sms: ''  };
+    email: '', date: '', phoneNumber: ''  };
   private itemDoc: AngularFirestoreDocument<Item>;
   public users: Observable<any[]>;
   public showWebcam = false;
@@ -89,8 +89,8 @@ export class UserComponent implements OnInit {
     this.currentUser.displayName = name;
     this.auth.updateUserData(this.currentUser).then(this.webcamImage = undefined);
   }
-  updateSMS(sms) {
-    this.currentUser.sms = sms;
+  updateSMS(phoneNumber) {
+    this.currentUser.phoneNumber = phoneNumber;
     this.auth.updateUserData(this.currentUser).then();
   }
   async getUser() {

@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="currentUser" fxLayout="column" fxLayoutAlign="center center">
   <div *ngIf="showWebcam" fxLayout="column" fxLayoutAlign="center center">
     <webcam [height]="200" [width]="200" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
       [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
@@ -16,7 +16,7 @@
   <p matLine>
     <span> {{currentUser.email}} </span>
   </p>
-  <p matLine #sms (blur)="updateSMS(sms.innerText)" contenteditable> {{(currentUser.sms)?currentUser.sms:'enter sms number'}} 
+  <p matLine #sms (blur)="updateSMS(sms.innerText)" contenteditable> {{(currentUser.phoneNumber)?currentUser.phoneNumber:'enter sms number'}} 
   </p>
   <p matLine>
     <span class="demo-2">{{currentUser.date | date:'fullDate'}}</span>
@@ -25,7 +25,7 @@
 
 <mat-list>
   <div *ngFor="let user of users | async">
-    <mat-list-item *ngIf="user.uid !== currentUser.uid">
+    <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
       <img matListAvatar [src]="user.photoURL" alt="...">
       <h3 matLine> {{user.displayName}} </h3>
       <p matLine>

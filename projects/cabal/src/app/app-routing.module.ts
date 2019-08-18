@@ -11,23 +11,23 @@ const redirectLoggedInToItems = redirectUnauthorizedTo(['home']);
 const routes: Routes = [
   { path: 'poll',
     loadChildren: () => import('./page/poll/poll.module').then(m => m.PollModule),
-    ...canActivate(redirectLoggedInToItems)
+    canActivate: [AuthGuard]
   },
   { path: 'edit',
     loadChildren: () => import('./page/teams/teams.module').then(m => m.TeamsModule),
-    ...canActivate(redirectLoggedInToItems)
+    canActivate: [AuthGuard]
   },
   { path: 'user',
     loadChildren: () => import('./page/user/user.module').then(m => m.UserModule),
-    ...canActivate(redirectLoggedInToItems)
+    // canActivate: [AuthGuard]
   },
   { path: 'games/:id',
     loadChildren: () => import('./page/game/game.module').then(m => m.GameModule),
-    ...canActivate(redirectLoggedInToItems)
+    canActivate: [AuthGuard]
   },
   { path: 'games',
     loadChildren: () => import('./page/games/games.module').then(m => m.GamesModule),
-    ...canActivate(redirectLoggedInToItems)
+    canActivate: [AuthGuard]
   },
   { path: '', component: HomeComponent },
   { path: 'chats/:id', component: ChatComponent, canActivate: [AuthGuard] }

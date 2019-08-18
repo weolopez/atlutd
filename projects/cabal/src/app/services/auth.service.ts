@@ -24,7 +24,7 @@ export class AuthService {
       switchMap(user => {
         if (user) {
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges().pipe(
-            tap(u => this.updateUserData(u)));
+            tap()); // this.updateUserData(u)));
         } else {
           return of(null);
         }
@@ -43,33 +43,23 @@ export class AuthService {
 
   private async oAuthLogin(provider) {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+   // return this.updateUserData(credential.user);
   }
 
-  public updateUserData({ uid, email, displayName, photoURL }, sms?) {
+  public updateUserData({ uid, email, displayName, photoURL, phoneNumber }) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     const date = Date.now();
-    let data;
-    if (sms) {
-      data = {
+    const data = {
         uid,
         email,
         displayName,
         photoURL,
         date,
-        sms
+        phoneNumber
       };
-    } else {
-      data = {
-        uid,
-        email,
-        displayName,
-        photoURL,
-        date
-      };
-    }
 
     data.date = date;
+
     return userRef.set(data, { merge: true });
   }
 
