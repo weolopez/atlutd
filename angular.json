@@ -1,0 +1,130 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "cabal": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/cabal",
+      "sourceRoot": "projects/cabal/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "public",
+            "index": "projects/cabal/src/index.html",
+            "main": "projects/cabal/src/main.ts",
+            "polyfills": "projects/cabal/src/polyfills.ts",
+            "tsConfig": "projects/cabal/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/cabal/src/favicon.ico",
+              "projects/cabal/src/assets"
+            ],
+            "styles": [
+              "projects/cabal/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/cabal/src/environments/environment.ts",
+                  "with": "projects/cabal/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cabal:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cabal:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cabal:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/cabal/src/test.ts",
+            "polyfills": "projects/cabal/src/polyfills.ts",
+            "tsConfig": "projects/cabal/tsconfig.spec.json",
+            "karmaConfig": "projects/cabal/karma.conf.js",
+            "assets": [
+              "projects/cabal/src/favicon.ico",
+              "projects/cabal/src/assets"
+            ],
+            "styles": [
+              "projects/cabal/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/cabal/tsconfig.app.json",
+              "projects/cabal/tsconfig.spec.json",
+              "projects/cabal/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/cabal/e2e/protractor.conf.js",
+            "devServerTarget": "cabal:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cabal:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "atlutd"
+}

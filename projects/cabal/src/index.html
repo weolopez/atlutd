@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atlutd</title>
+    <base href="/">
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+    <!-- <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" /> -->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      #cdk-overlay-0 > div > div > div:nth-child(2) > button {
+          /* visibility: hidden; */
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: white;
+      }
+    </style>
+    <!-- <script>
+      FIRESTORE_EMULATOR_HOST=localhost:8080
+    </script> -->
+  </head>
+  <body>
+    <app-root></app-root>
+    <script>
+      setTimeout(function(){
+		// Hide the address bar!
+		window.scrollTo(0, 1);
+	}, 0);
+    </script>
+  </body>
+</html>

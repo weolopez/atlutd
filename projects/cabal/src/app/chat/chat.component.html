@@ -1,0 +1,37 @@
+<div *ngIf="chat$ | async as chat">
+  <div *ngIf=" auth.user$ | async as user">
+
+    <!-- <div class="top"> -->
+      <!-- <p><a class="tag" routerLink="/">Back</a>
+        <span class="tag is-success">
+          https://firestore-megachat.firebaseapp.com/chats/{{ chat.id }}
+        </span>
+      </p> -->
+    <!-- </div> -->
+    <mat-list #chatBox class="chat">
+      <mat-list-item class="msg animated zoomInUp" *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+        <img matListAvatar [src]="msg.user?.photoURL || 'assets/unicorn.svg'" alt="...">
+        <p matLine>
+          <span>{{ msg.content }}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+    <mat-form-field class="example-form-field">
+        <input matInput #newMsg type="text">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="submit(newMsg.value);newMsg.value=''" class="button is-info">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+  </div>
+</div>
+
+<!-- <mat-list #scrollList id="chatlist" cdkScrollable>
+      <mat-list-item *ngFor="let msg of chat.messages; trackBy: trackByCreated">
+        <img matListAvatar [src]="msg.user?.photoURL || 'assets/unicorn.svg'" alt="...">
+        <p matLine>
+          <span>{{ msg.content }}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+
+    -->
