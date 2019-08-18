@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyC9FMeiidIyqt-2t3mMHzP5dsQWW6OPWWY',
-    authDomain: 'mls-pts.firebaseapp.com',
-    databaseURL: 'https://mls-pts.firebaseio.com',
-    projectId: 'mls-pts',
-    storageBucket: 'mls-pts.appspot.com',
-    messagingSenderId: '360578839419',
-    appId: '1:360578839419:web:fb4ac180cd3c8cfc'
+    apiKey: "AIzaSyAWQd2qC2N4FqGXQ_Ci7CbtZdoRljl4fTk",
+    authDomain: "surfcamp2019.firebaseapp.com",
+    databaseURL: "https://surfcamp2019.firebaseio.com",
+    projectId: "surfcamp2019",
+    storageBucket: "surfcamp2019.appspot.com",
+    messagingSenderId: "22807857255",
+    appId: "1:22807857255:web:e9aedd9676c1d738"
   }
 };
