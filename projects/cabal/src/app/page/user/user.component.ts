@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { AuthService } from '../../services/auth.service';
 import { Observable, Subject } from 'rxjs';
+import { timeout } from 'q';
+import { AuthProcessService } from 'ngx-auth-firebaseui';
 
 export interface Item { name: string; }
 @Component({
@@ -12,18 +14,20 @@ export interface Item { name: string; }
 })
 export class UserComponent implements OnInit {
 
-  public currentUser = { uid: '', photoURL: '', displayName: '',
-    email: '', date: '', phoneNumber: ''  };
+  public currentUser = { uid: '', photoURL: '', displayName: 'Enter Name',
+    email: 'Enter Email', date: '', phoneNumber: 'Enter Phone Number'  };
   private itemDoc: AngularFirestoreDocument<Item>;
   public users: Observable<any[]>;
-  public showWebcam = false;
 
+  public editProfile = false;
+  public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
+
   public deviceId: string;
   public videoOptions: MediaTrackConstraints = {
-    // width: {ideal: 1024},
-    // height: {ideal: 576}
+    width: {ideal: 576},
+    height: {ideal: 576}
   };
   public errors: WebcamInitError[] = [];
 
@@ -68,7 +72,8 @@ export class UserComponent implements OnInit {
 
   constructor(
       db: AngularFirestore,
-      private auth: AuthService
+      private auth: AuthService,
+      public afAuth: AuthProcessService
     ) {
     this.users = db.collection('users').valueChanges();
     this.getUser();
@@ -79,6 +84,27 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout( () => {
+      const s = (document.querySelector('#video > div > video') as HTMLElement).style;
+      s.borderRadius = '50%';
+      s.transition = '1.6s';
+      s.transformStyle = 'preserve-3d';
+      s.transform = 'translate(0px, -17px) rotateY(0deg) scale(-1,1)';
+      const t = (document.querySelector('#scrollList > app-user > div > img') as HTMLElement).style;
+      t.transition = '1.6s';
+      t.transformStyle = 'preserve-3d';
+      t.transform = 'rotateY(90deg)';
+    }
+    , 1000);
+  }
+  flip() {
+    const s = (document.querySelector('#video > div > video') as HTMLElement).style;
+    const t = (document.querySelector('#scrollList > app-user > div > img') as HTMLElement).style;
+    s.transform = (!this.showWebcam) ? 'translate(0px, -17px) rotateY(0deg) scale(-1,1)'
+        : 'translate(0px, -17px) rotateY(90deg) scale(-1,1)';
+    t.transform = (this.showWebcam) ? 'rotateY(0deg)' : 'rotateY(90deg)';
+
+    this.showWebcam = !this.showWebcam;
   }
 
   updateProfileImage() {

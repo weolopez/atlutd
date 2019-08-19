@@ -1,6 +1,6 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" style="height: 80px">
   <mat-toolbar-row fxLayout="row">
-    <button fxHide.gt-xs mat-icon-button>
+    <!-- <button fxHide.gt-xs mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
     </button>
     <span class="menu-spacer"></span>
@@ -13,17 +13,18 @@
     <div style="margin-left: auto;">
       <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar>
       <button *ngIf="!loggedIn" mat-button (click)="showProviders=!showProviders">Login</button>
-    </div>
+    </div> -->
+    <h1 style="width: 100%; text-align: center; font-size: 8vw">Surf Camp 2019</h1>
   </mat-toolbar-row>
 
-  <mat-toolbar-row *ngIf="showProviders && !loggedIn ">
+  <!-- <mat-toolbar-row *ngIf="showProviders && !loggedIn ">
     <ngx-auth-firebaseui-providers providers="['google']" (click)="showProviders=!showProviders">
     </ngx-auth-firebaseui-providers>
-  </mat-toolbar-row>
+  </mat-toolbar-row> -->
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav #sidenav>
+  <!-- <mat-sidenav #sidenav>
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/games'"> Games</a>
       <a mat-list-item [routerLink]="'/'"> Chats</a>
@@ -32,7 +33,7 @@
       <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
 
     </mat-nav-list>
-  </mat-sidenav>
+  </mat-sidenav> -->
   <mat-sidenav-content>
     <div id="scrollList" style="height: 100vh;" cdkScrollable>
       <router-outlet></router-outlet>

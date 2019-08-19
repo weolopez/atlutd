@@ -8,6 +8,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {WebcamModule} from 'ngx-webcam';
 import { MatButtonModule } from '@angular/material';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { environment } from 'projects/cabal/src/environments/environment';
 @NgModule({
   declarations: [UserComponent],
   imports: [
@@ -17,7 +19,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     MatListModule,
     MatButtonModule,
     FlexLayoutModule,
-    WebcamModule
+    WebcamModule,
+    NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ]
 })
 export class UserModule { }

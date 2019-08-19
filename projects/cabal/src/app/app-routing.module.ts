@@ -29,7 +29,7 @@ const routes: Routes = [
     loadChildren: () => import('./page/games/games.module').then(m => m.GamesModule),
     canActivate: [AuthGuard]
   },
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'user', pathMatch: 'full' }, // component: HomeComponent },
   { path: 'chats/:id', component: ChatComponent, canActivate: [AuthGuard] }
 ];
 
