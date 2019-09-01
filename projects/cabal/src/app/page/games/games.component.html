@@ -1,13 +1,31 @@
 <mat-list>
-  <div [routerLink]="'/games/'+message.id" *ngFor="let message of items | async">
-    <p style="margin-bottom: 0">{{message.id}}</p>
-    <mat-list-item *ngIf="message.home | async as home">
+  <div (click)="game.expand=!game.expand" *ngFor="let game of items | async">
+    <h1>{{game.id}}</h1>
+    <section *ngIf="game.expand">
+    <mat-list-item *ngIf="game.home | async as home">
       <img matListAvatar [src]="home.image" alt="...">
       <h1 class="team" matLine> {{home.name}} </h1>
     </mat-list-item>
-    <mat-list-item *ngIf="message.away | async as away">
+    <mat-list-item *ngIf="game.away | async as away">
       <img matListAvatar [src]="away.image">
       <h1 class="team" matLine> {{away.name}} </h1>
     </mat-list-item>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <div *ngFor="let key of Obj.keys(game.seats)">
+         <img  *ngIf="game.seats[key].owner | async as owner; else unassigned "
+               class="memberURL" [src]="owner.photoURL" alt="...">
+        <ng-template #unassigned>
+            <div *ngIf="game.seats[key].seats | async as s">
+              <div fxLayout="row" fxLayoutAlign="space-around center">
+                <button id="selectButton" mat-button
+                  *ngIf="true" (click)="select(key, game)"
+                   >{{s.Seat}}</button>
+              </div>
+            </div>
+        </ng-template>
+      </div>
+    </div>
+  </section>
   </div>
 </mat-list>

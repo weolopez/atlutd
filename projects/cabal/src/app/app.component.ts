@@ -19,6 +19,7 @@ export class AppComponent {
   ) {
     auth.getUser().then(event => {
       this.loggedIn = (!event) ? false : true;
+      if (event) { auth.updateUserData(event); }
     });
   }
 

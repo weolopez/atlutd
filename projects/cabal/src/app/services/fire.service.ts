@@ -29,6 +29,9 @@ export class FireService {
   }
 
   deepGetDoc(collection, doc) {
+    if (!doc) {
+      return this.deepGetCollection(collection);
+    }
     return this.afs.collection(collection).doc(doc).valueChanges().pipe(map(d => {
       d = traverse(d, (value) => {
         return this.resolve(value);
