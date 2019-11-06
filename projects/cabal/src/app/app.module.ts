@@ -18,6 +18,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FirePipe } from './services/fire.pipe';
 
 @NgModule({
   declarations: [AppComponent, ChatComponent,
@@ -41,7 +42,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AngularFireStorageModule,
     NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ],
-  providers: [AngularFireAuthGuard],
+  providers: [AngularFireAuthGuard, FirePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

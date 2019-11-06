@@ -9,7 +9,7 @@ import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 const redirectLoggedInToItems = redirectUnauthorizedTo(['home']);
 
 const routes: Routes = [
-  { path: 'season',
+  { path: 'seasons/:id',
     loadChildren: () => import('./page/season/season.module').then(m => m.SeasonModule),
     // canActivate: [AuthGuard]
   },

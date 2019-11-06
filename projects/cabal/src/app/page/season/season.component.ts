@@ -1,28 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from '@firebase/util';
 import { FireService } from '../../services/fire.service';
-import { applySourceSpanToExpressionIfNeeded } from '@angular/compiler/src/output/output_ast';
-import { tap } from 'rxjs/operators';
+import { tap, filter, map, mergeMap, merge, ignoreElements, finalize } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 
 export interface Round {
-      round: number;
-  }
+  round: number;
+}
 
 export interface Draft {
-      rounds: Round[];
-  }
+  rounds: Round[];
+}
 
 export interface Season {
-      draft: Draft;
-      id: string;
-      currentRound: number;
-      rounds: string;
-      games: string;
-      members: string[];
-  }
+  draft: Draft;
+  id: string;
+  currentRound: number;
+  rounds: string;
+  games: string;
+  members: string[];
+}
 
 
 
@@ -34,49 +33,64 @@ export interface Item { name: string; }
   styleUrls: ['./season.component.scss']
 })
 export class SeasonComponent implements OnInit {
-  public season = {
-    draft: {
-      rounds: [
-          {
-            round: 1,
-          }
-       ],
-    },
-    id: 'Cabal Open Cup',
-      currentRound: 0,
-      rounds: '9',
-    games: '_games$',
+  public iseason = {
+    id: '',
+    currentRound: 0,
+    rounds: '',
     members: [
-      '_users$MlAUWQ1MOKRm1qtrqgIPxQxu5En1',
-      '_users$My2v5gVEXyglna16hFgt0wOSmGP2',
-      '_users$5FlgZDjCiaPK1Fi5TCMEbk1R9I42',
-      '_users$yLWEBMNYfleyhc4mG7aDPhSHSYe2',
-      '_users$QKsxVXHjNePNTNOMYSQKO6KGCml2'
     ]
   };
   private itemDoc: AngularFirestoreDocument<Item>;
   public currentSeason;
+  games: any;
+  users: Observable<unknown[]>;
+  seasonRef: AngularFirestoreDocument<unknown>;
+  seasonObs: Observable<unknown>;
+  usersData: unknown[];
   constructor(
+    public route: ActivatedRoute,
     public db: AngularFirestore,
     fs: FireService
-    ) {
-    // this.seasons = fs.deepGetDoc('seasons', 'Cabal Open Cup');
-    // this.db.collection('seasons').doc('Cabal Open Cup')
-    // .valueChanges().pipe(tap(d => {
-    //   this.season = d;
-    // })).subscribe();
+  ) {
+    this.currentSeason = this.route.snapshot.paramMap.get('id');
+    this.seasonRef = db.collection('seasons').doc(this.currentSeason);
+    this.seasonObs = this.seasonRef.valueChanges();
+    this.games = db.collection('games', ref =>
+      ref.where('season', '==', this.currentSeason)
+    ).valueChanges();
+
+    this.db.collection('users', ref =>
+      ref.where('season', '==', this.currentSeason)
+    ).valueChanges()
+    .pipe(filter(user => user['season'] === this.currentSeason))
+    .pipe(tap(user => this.iseason.members.push(user)))
+    .pipe(finalize(()=> console.dir(this.iseason.members)))
+    .subscribe();
+    
   }
 
   ngOnInit() {
   }
+  setNewSeason() {
+    this.iseason.id = this.currentSeason;
+    this.db.collection('seasons').doc(this.currentSeason).set(this.iseason);
+
+    // this.db.collection('users', ref =>
+    //   ref.where('season', '==', this.currentSeason)
+    // ).valueChanges().pipe(tap(users => {
+    //   users.filter(user => user['season'] === this.currentSeason)
+    //     .forEach(user => this.iseason.members.push(user));
+    // })).subscribe();
+  }
   startRound(season) {
     season.currentRound = Number(season.currentRound) + 1;
-    const shuffledArray = this.shuffle(season.members);
-    this.update({
-      draft: {
-        membersLeft: shuffledArray
-      }
-      });
+    // const shuffledArray = this.shuffle(this.users);
+    // this.update({
+    //   currentRound: season.currentRound,
+    //   draft: {
+    //     membersLeft: shuffledArray
+    //   }
+    // });
   }
   shuffle(array) {
     let currentIndex = array.length;
@@ -96,7 +110,7 @@ export class SeasonComponent implements OnInit {
     return array;
   }
   update(data) {
-    this.db.collection('seasons').doc('Cabal Open Cup')
-        .update(data);
+    this.
+      seasonRef.update(data);
   }
 }

@@ -6,9 +6,10 @@ import { SeasonComponent } from './season.component';
 import {MatListModule} from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material';
+import { FirePipe } from '../../services/fire.pipe';
 
 @NgModule({
-  declarations: [SeasonComponent],
+  declarations: [SeasonComponent, FirePipe],
   imports: [
     CommonModule,
     SeasonRoutingModule,

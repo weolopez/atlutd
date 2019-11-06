@@ -19,7 +19,7 @@ export class FireService {
     private router: Router
   ) { }
 
-  deepGetCollection(collection) {
+  deepGetCollection(collection, filter?) {
     return this.afs.collection(collection).valueChanges().pipe(map(d => {
       d = traverse(d, (value) => {
         return this.resolve(value);

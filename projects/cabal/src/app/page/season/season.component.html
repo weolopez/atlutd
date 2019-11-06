@@ -1,6 +1,27 @@
-<!-- <section id="games">
-  {{season | json}}
-  <div fxLayout="row">
+<section id="games" *ngIf="seasonObs | async as season else newSeason">
+  {{currentSeason}}
+  <button (click)="startRound(season)">start</button>
+  <hr>
+  <button (click)="showseason=!showseason">seasons</button>
+  <pre *ngIf="!showseason">
+        {{season | json}}
+    </pre>
+  <button (click)="sgames=!sgames">games</button>
+  <pre *ngIf="sgames">
+    {{games | async | json}}
+</pre>
+
+<button (click)="susers=!susers">users</button>
+<pre *ngIf="susers">
+  {{ usersData | json}}
+</pre>
+</section>
+<ng-template #newSeason>
+<section *ngIf="'users' | fire | async as users">
+  <button (click)="setNewSeason(users)">NEW SEASON</button>
+  </section>
+</ng-template>
+  <!--div fxLayout="row">
     <div fxLayout="column">
       <div *ngIf="season.draft[season.currentRound]; else notShow">
 
