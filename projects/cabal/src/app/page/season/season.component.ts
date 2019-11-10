@@ -5,6 +5,7 @@ import { FireService } from '../../services/fire.service';
 import { tap, filter, map, mergeMap, ignoreElements, finalize, combineLatest, take, merge } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { AuthService } from '../../services/auth.service';
 
 export interface Season {
   id: string;
@@ -34,21 +35,26 @@ export class SeasonComponent implements OnInit {
   seasonRef: AngularFirestoreDocument<unknown>;
   seasonObs: Observable<unknown>
   usersRef: AngularFirestoreDocument<unknown>
-  users: Observable<unknown[]>;;
+  usersObs: Observable<unknown[]>;
+  user: any;
   seats: Observable<unknown[]>;
   games: Observable<unknown>;
 
   constructor(
     public route: ActivatedRoute,
     public db: AngularFirestore,
-    fs: FireService
+    fs: FireService,
+    public auth: AuthService
   ) {
+    auth.getUser().then(user=>{
+      this.user = user;
+    })
 
     this.currentSeason = this.route.snapshot.paramMap.get('id');
     this.seasonRef = db.collection('seasons').doc(this.currentSeason);
     this.seasonObs = this.seasonRef.valueChanges();
 
-    this.users = this.db.collection('users', ref =>
+    this.usersObs = this.db.collection('users', ref =>
       ref.where('season', '==', this.currentSeason)).valueChanges();
 
     this.seats = this.db.collection('seats', ref =>
@@ -66,7 +72,6 @@ export class SeasonComponent implements OnInit {
                 const USERID = user['id'];
                 usersObject[GAMEID] = (usersObject[GAMEID]) ? usersObject[GAMEID] : {}; 
                 usersObject[GAMEID][SEATID] = USERID ;
-                //games[GAMEID]['seats'][user['seats'][GAMEID]] = user['seats'][GAMEID]
               })
             });
             games.map(game => {
@@ -92,7 +97,7 @@ export class SeasonComponent implements OnInit {
   setNewSeason() {
     this.db.collection('seasons').doc(this.currentSeason).set({ id: this.currentSeason, currentRound: 0, members: [] });
     this.games.subscribe(games => this.update({ gamesCount: games['length'] }));
-    this.users.pipe(map(users => users.map(users => users['id'])))
+    this.usersObs.pipe(map(users => users.map(users => users['id'])))
       .subscribe(users => this.update({ usersCount: users.length, members: this.shuffle(users), nextPick: 0 }));
     this.seats.subscribe(seats => this.update({ seatsCount: seats.length }));
   }
@@ -126,6 +131,7 @@ export class SeasonComponent implements OnInit {
     this.seasonRef.update(data);
   }
   pick(game, seat, season) {
+    if (season.members[season.nextPick] !== this.user.id) return;
     this.db.doc('users/' + season.members[season.nextPick])
       .snapshotChanges().subscribe(user => {
         const data = user.payload.data();
@@ -138,7 +144,24 @@ export class SeasonComponent implements OnInit {
         if ( result.length > 0 ) return;
         seats['seats'].push(s);
         user.payload.ref.update(seats);
+        let nextpi = season.nextPick+1 ;
+        let nextRound = season.currentRound;
+        if (nextpi>=season.usersCount) {
+          nextpi = 0;
+          nextRound = nextRound+1;
+        }
+        this.update({
+          nextPick: nextpi,
+          currentRound: nextRound
+        })
       })
+  }
+  changeUser(user) {
+    this.user = user;
+  }
+  getNextPick(season, users) {
+    const np = season.members[season.nextPick];
+    return users.filter(user=>user.id===np)[0];
   }
   getLength(seats) { return Object.keys(seats); }
 }

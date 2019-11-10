@@ -3,7 +3,7 @@
     <button fxHide.gt-xs mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
     </button>
-    <span class="menu-spacer"></span>
+    <span class="menu-spacer">{{title}}</span>
     <div fxHide.xs>
       <a mat-button [routerLink]="'/games'">Games</a>
       <a mat-button [routerLink]="'/'"> Chats </a>

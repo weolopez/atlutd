@@ -1,24 +1,31 @@
 <main id="games" *ngIf="seasonObs | async as season else newSeason">
-  {{currentSeason}} | Rounds: {{ (season.gamesCount * season.seatsCount) / season.usersCount }}
+  {{currentSeason}} 
+  <h4>| Rounds: {{ (season.gamesCount * season.seatsCount) / season.usersCount }}</h4>
+  <h4 *ngIf="user"> | Logged In User:  {{ user.displayName }}</h4>
   <button *ngIf="season.currentRound==0" (click)="startRound(season)">start</button>
   <hr>
 
-  <section *ngIf="users | async as user">
+  <section *ngIf="usersObs | async as users">
     <button (click)="susers=!susers">users</button>
-    Next Pick: {{user[season.nextPick].displayName}}
-    <pre *ngIf="susers">
+    Next Pick: {{getNextPick(season, users).displayName}}
+    <ul *ngIf="susers">
+      <li *ngFor="let user of users ">
+          Pick: <button (click)="changeUser(user)">{{ user.displayName}}</button>
+        <pre>
           {{ user | json}}
         </pre>
+      </li>
+    </ul>
   </section>
 
   <button (click)="showseason=!showseason">seasons</button>
-  <pre *ngIf="!showseason">
+  <pre *ngIf="showseason">
         {{season | json}}
   </pre>
 
   <section *ngIf="games">
     <button (click)="sgames=!sgames">games</button>
-    <ul *ngIf="sgames">
+    <ul *ngIf="!sgames">
       <li *ngFor="let game of games | async">
           Pick: <button *ngFor="let seat of getLength(game.seats)" (click)="pick(game, seat, season)">{{game.seats[seat]}}</button>
         <pre>
