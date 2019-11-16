@@ -10,8 +10,108 @@ h1, h2, h3{
     background: #80000A;
     color: #A19060;
 }
-img {
-  object-fit: cover;
-  border-radius: 50%;
-  float: left;
+.seatButton {
+    object-fit: cover;
+    border-radius: 50%;
+    float: left;
+    background: #80000A;
+    width: 55px;
+    height: 55px;
 }
+.gameRow {
+    height: auto;
+}
+header {
+    .gameHeader {
+        align-self: center;
+        width: 300px;
+    }
+    margin: 0 0 0 35px;
+    width: 600px;
+    padding: 0;
+    height: auto;
+}
+.game {
+    
+    margin: 0 0 0 15px;
+    width: 300px;
+    justify-content: space-around;
+    
+    h4 {
+        margin: 0;
+    }
+}
+
+
+.pieContainer {
+    height: 50px;
+    position: relative;
+  }
+  
+  .pieBackground {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+  } 
+  
+  .pie {
+    transition: all 1s;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    clip: rect(0px, 25px, 50px, 0px);
+  }
+  
+  .hold {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    clip: rect(0px, 50px, 50px, 25px);
+  }
+  
+  #pieSlice1 .pie {
+    transform:rotate(120deg);
+  }
+
+  #pieSlice3 {
+    transform: rotate(120deg);
+  }
+  
+  #pieSlice3 .pie {
+    transform: rotate(120deg);
+  }
+  
+  #pieSlice6 {
+    transform: rotate(240deg);
+  }
+  
+  #pieSlice6 .pie {
+    transform: rotate(120deg);
+  }
+  
+  .innerCircle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #444;
+    border-radius: 100%;
+    top: 5px;
+    left: 5px; 
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.5) inset;
+    color: white;
+  }
+  .team-name {
+      margin-left: 15px;
+  }
+
+  #newSeason {
+    color: #A19060;
+    font-size: xx-large;
+    margin: 50px 0 50px 0;
+    text-align: center;
+    width:100%; 
+  }

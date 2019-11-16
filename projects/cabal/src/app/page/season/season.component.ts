@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { AuthService } from '../../services/auth.service';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 export interface Season {
   id: string;
   currentRound?: number;
@@ -14,6 +16,13 @@ export interface Season {
   games?: any[];
   members?: any[];
   seats?: any[];
+}
+export interface Seat{
+  id: string;
+}
+export interface Game{
+  id: string;
+  seats?: any;
 }
 
 export interface Item { name: string; }
@@ -39,12 +48,13 @@ export class SeasonComponent implements OnInit {
   user: any;
   seats: Observable<unknown[]>;
   games: Observable<unknown>;
-
+  seatCount = 0;
   constructor(
+    private snackBar: MatSnackBar,
     public route: ActivatedRoute,
     public db: AngularFirestore,
     fs: FireService,
-    public auth: AuthService
+    public auth: AuthService,
   ) {
     auth.getUser().then(user=>{
       this.user = user;
@@ -61,6 +71,7 @@ export class SeasonComponent implements OnInit {
       ref.where('season', '==', this.currentSeason)).valueChanges();
 
     this.seats.subscribe(seats => {
+      this.seatCount = seats.length;
       this.games = this.db.collection('users', ref => ref.where('season', '==', this.currentSeason)).valueChanges()
         .pipe(mergeMap(users => this.db.collection('games', ref => ref.where('season', '==', this.currentSeason)).valueChanges()
           .pipe(map(games => {
@@ -74,12 +85,12 @@ export class SeasonComponent implements OnInit {
                 usersObject[GAMEID][SEATID] = USERID ;
               })
             });
-            games.map(game => {
-              game['seats'] = {};
-              seats.forEach(seat => game['seats'][seat['id']] = seat['id']);
-              const g = usersObject[game['id']];
-              if (g) Object.keys(g)
-                .forEach(SEATID => game['seats'][SEATID] = g[SEATID]);
+            games.map((game: Game) => {
+              game.seats = {};
+              seats.forEach((seat: Seat) => {
+                game.seats[seat.id] = (usersObject[game.id] && usersObject[game.id][seat.id]) ?
+                  usersObject[game.id][seat.id] : seat.id;
+              });
             });
             return games;
           }))
@@ -93,12 +104,31 @@ export class SeasonComponent implements OnInit {
   }
 
   ngOnInit() {
+// counts of appearances for all possible permutations
+let count = {
+  '123': 0,
+  '132': 0,
+  '213': 0,
+  '231': 0,
+  '321': 0,
+  '312': 0
+};
+
+for (let i = 0; i < 1000000; i++) {
+  let array = [1, 2, 3];
+  count[this.shuffle(array).join('')]++;
+}
+
+// show counts of all possible permutations
+for (let key in count) {
+  console.log(`${key}: ${count[key]}`);
+}
   }
-  setNewSeason() {
+  setNewSeason(users: Array<any>) {
+
     this.db.collection('seasons').doc(this.currentSeason).set({ id: this.currentSeason, currentRound: 0, members: [] });
     this.games.subscribe(games => this.update({ gamesCount: games['length'] }));
-    this.usersObs.pipe(map(users => users.map(users => users['id'])))
-      .subscribe(users => this.update({ usersCount: users.length, members: this.shuffle(users), nextPick: 0 }));
+    this.update({ usersCount: users.length, members: users.map(u=>u.id), nextPick: 0 });
     this.seats.subscribe(seats => this.update({ seatsCount: seats.length }));
   }
   startRound(season) {
@@ -110,28 +140,22 @@ export class SeasonComponent implements OnInit {
     }
   }
   shuffle(array) {
-    let currentIndex = array.length;
-    let temporaryValue;
-    let randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   }
   update(data) {
-    console.dir(data);
     this.seasonRef.update(data);
   }
   pick(game, seat, season) {
-    if (season.members[season.nextPick] !== this.user.id) return;
+    if (season.members[season.nextPick] !== this.user.id) {
+      this.snackBar.open(`It is ${season.members[season.nextPick]} turn`, 'Close', {
+        duration: 3000
+      });
+      return;
+    }
     this.db.doc('users/' + season.members[season.nextPick])
       .snapshotChanges().subscribe(user => {
         const data = user.payload.data();

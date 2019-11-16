@@ -1,16 +1,24 @@
 <main id="games" *ngIf="seasonObs | async as season else newSeason">
-  {{currentSeason}} 
-  <h4>| Rounds: {{ (season.gamesCount * season.seatsCount) / season.usersCount }}</h4>
-  <h4 *ngIf="user"> | Logged In User:  {{ user.displayName }}</h4>
+  {{currentSeason}}
+  <h4>
+    {{season.gamesCount}}|{{seatCount}}|{{season.usersCount }}
+  </h4>
+  <h4>| Rounds: {{ (season.gamesCount * seatCount) / season.usersCount }}</h4>
+  <h4 *ngIf="user"> | Logged In User: {{ user.displayName }}</h4>
   <button *ngIf="season.currentRound==0" (click)="startRound(season)">start</button>
   <hr>
 
   <section *ngIf="usersObs | async as users">
+    <div fxLayout="row">
+      <app-avatar [img]="user.photoURL" [selected]="user.id === season.members[season.nextPick]"
+        *ngFor="let user of users"></app-avatar>
+    </div>
+
     <button (click)="susers=!susers">users</button>
     Next Pick: {{getNextPick(season, users).displayName}}
     <ul *ngIf="susers">
       <li *ngFor="let user of users ">
-          Pick: <button (click)="changeUser(user)">{{ user.displayName}}</button>
+        Pick: <button (click)="changeUser(user)">{{ user.displayName}}</button>
         <pre>
           {{ user | json}}
         </pre>
@@ -25,92 +33,57 @@
 
   <section *ngIf="games">
     <button (click)="sgames=!sgames">games</button>
-    <ul *ngIf="!sgames">
-      <li *ngFor="let game of games | async">
-          Pick: <button *ngFor="let seat of getLength(game.seats)" (click)="pick(game, seat, season)">{{game.seats[seat]}}</button>
-        <pre>
-            {{game | json}}
-        </pre>
-      </li>
-    </ul>
+    <mat-list *ngIf="!sgames">
+      <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async">
+        <!-- {{game | json}} -->
+        <section matListAvatar>
+          <div class="pieContainer">
+            <div class="pieBackground"></div>
+            <div id="pieSlice1" class="hold">
+              <div (click)="pick(game, 'A', season)" [style.background-color]="(game.seats.A.length>1)?'grey':'#A19060'"
+                class="pie"></div>
+            </div>
+            <div id="pieSlice3" class="hold">
+              <div (click)="pick(game, 'B', season)" [style.background-color]="(game.seats.B.length>1)?'grey':'#80000A'"
+                class="pie"></div>
+            </div>
+            <div id="pieSlice6" class="hold">
+              <div (click)="pick(game, 'C', season)" [style.background-color]="(game.seats.C.length>1)?'grey':'black'"
+                class="pie"></div>
+            </div>
+          </div>
+          <!-- <button class="seatButton" *ngFor="let seat of getLength(game.seats)" -->
+          <!-- <h1> {{game.seats[seat]}} </h1> -->
+        </section>
+        <header fxLayout="row wrap">
+          <h1 style="padding: 0 20px 0 20px;" class="gameHeader" id="date" fxLayout="column"> {{game.date}} </h1>
+
+          <mat-list style="margin: -10px;" fxLayout="column">
+            <mat-list-item *ngIf="game.home | fire | async as home">
+              <img matListAvatar [src]="home.image">
+              <h4 class="team-name"> {{ home.name }} </h4>
+            </mat-list-item>
+            <mat-list-item *ngIf="game.away | fire | async as away">
+              <img matListAvatar [src]="away.image">
+              <h4 class="team-name"> {{ away.name }} </h4>
+            </mat-list-item>
+          </mat-list>
+        </header>
+      </mat-list-item>
+    </mat-list>
   </section>
 
 
 </main>
 <ng-template #newSeason>
-  <section *ngIf="'users' | fire | async as users">
-    <button (click)="setNewSeason(users)">NEW SEASON</button>
+  <h1 id="newSeason">
+    {{currentSeason}}
+  </h1>
+  <section *ngIf="usersObs | async as users">
+    <div fxLayout="row" fxLayoutAlign="space-around">
+      <app-avatar [img]="user.photoURL" [selected]="false"
+        *ngFor="let user of shuffle(users)"></app-avatar>
+    </div>
+    <button id="newSeason" style="background: #80000A" (click)="setNewSeason(users)">NEW SEASON</button>
   </section>
 </ng-template>
-<!--div fxLayout="row">
-    <div fxLayout="column">
-      <div *ngIf="season.draft[season.currentRound]; else notShow">
-
-        <button matButton (click)="startRound(season);">Start Round {{season.currentRound}}</button>
-
-      </div>
-
-      <ng-template #notShow>
-        <h2>{{season.currentRound}} / {{season.rounds}}</h2>
-        <h3>{{season.currentMember}} / {{season.members}}</h3>
-      </ng-template>
-
-    </div>
-  </div>
-  <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
-    <div fxFlex="50" class="sec1" fxFlex.xs="55">
-      <mat-list *ngIf="season.draft[season.currentRound]; else notShowMembers">
-        <div *ngFor="let user of season.draft[season.currentRound].members">
-          <mat-list-item>
-            <img matListAvatar [src]="user.photoURL" alt="...">
-            <h3 matLine>### {{user.displayName}} </h3>
-            <p matLine>
-              <span> {{user.email}} </span>
-            </p>
-            <p matLine>
-              <span class="demo-2">{{user.date | date:'fullDate'}}</span>
-            </p>
-          </mat-list-item>
-        </div>
-      </mat-list>
-
-      <ng-template #notShowMembers>
-        <mat-list *ngFor="let member of season.members">
-          <div *ngIf="member | async as user">
-            <mat-list-item>
-              <img matListAvatar [src]="user.photoURL" alt="...">
-              <h3 matLine> {{user.displayName}} </h3>
-              <p matLine>
-                <span> {{user.email}} </span>
-              </p>
-              <p matLine>
-                <span class="demo-2">{{user.date | date:'fullDate'}}</span>
-              </p>
-            </mat-list-item>
-          </div>
-        </mat-list>
-      </ng-template>
-
-    </div>
-    <div fxFlex="50" class="sec2">
-      <div>
-        <p>{{ games | json}}</p>
-      </div>
-      <mat-list *ngIf="season.games | async as games">
-        <div *ngFor="let game of games ">
-          <p style="margin-bottom: 0">{{game.id}}</p>
-          <mat-list-item *ngIf="game.home | async as home">
-            <img matListAvatar [src]="home.image" alt="...">
-            <h1 class="team" matLine> {{home.name}} </h1>
-          </mat-list-item>
-          <mat-list-item *ngIf="game.away | async as away">
-            <img matListAvatar [src]="away.image">
-            <h1 class="team" matLine> {{away.name}} </h1>
-          </mat-list-item>
-        </div>
-      </mat-list>
-
-    </div>
-  </div>
-
-</section> -->
