@@ -9,7 +9,7 @@ import { AuthProcessService } from 'ngx-auth-firebaseui';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Cabal20';
+  title = 'Season Tickets';
   public loggedIn = false;
   public showProviders = false;
   constructor(

@@ -1,4 +1,12 @@
 <mat-list>
+
+    <button (click)="getGamez()">GET GAMEZ</button>
+
+    <mat-list-item *ngFor="let g of gamez">
+      <button (click)="getImg(g)">GET IMG</button>{{g | json}}
+    </mat-list-item>
+</mat-list>
+<mat-list>
   <div (click)="game.expand=!game.expand" *ngFor="let game of items | async">
     <h1>{{game.id}}</h1>
     <section *ngIf="game.expand">

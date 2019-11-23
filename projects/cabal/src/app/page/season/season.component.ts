@@ -126,7 +126,7 @@ for (let key in count) {
   }
   setNewSeason(users: Array<any>) {
 
-    this.db.collection('seasons').doc(this.currentSeason).set({ id: this.currentSeason, currentRound: 0, members: [] });
+    this.db.collection('seasons').doc(this.currentSeason).set({ id: this.currentSeason, currentRound: 1, members: [] });
     this.games.subscribe(games => this.update({ gamesCount: games['length'] }));
     this.update({ usersCount: users.length, members: users.map(u=>u.id), nextPick: 0 });
     this.seats.subscribe(seats => this.update({ seatsCount: seats.length }));
@@ -182,6 +182,13 @@ for (let key in count) {
   }
   changeUser(user) {
     this.user = user;
+  }
+
+  addUser(user) {
+    this.db.doc('users/'+user.id).update({season: this.currentSeason});
+  }
+  removeUser(user) {
+    this.db.doc('users/'+user.id).update({season: ''});
   }
   getNextPick(season, users) {
     const np = season.members[season.nextPick];

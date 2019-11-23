@@ -1,39 +1,50 @@
 <main id="games" *ngIf="seasonObs | async as season else newSeason">
-  {{currentSeason}}
-  <h4>
-    {{season.gamesCount}}|{{seatCount}}|{{season.usersCount }}
-  </h4>
-  <h4>| Rounds: {{ (season.gamesCount * seatCount) / season.usersCount }}</h4>
-  <h4 *ngIf="user"> | Logged In User: {{ user.displayName }}</h4>
-  <button *ngIf="season.currentRound==0" (click)="startRound(season)">start</button>
-  <hr>
+  <button (click)="sedit=!sedit">edit</button>
+  <div *ngIf="sedit">
+
+    <h4>
+      {{season.gamesCount}}|{{seatCount}}|{{season.usersCount }}
+    </h4>
+    <h4>| Rounds: {{ (season.gamesCount * seatCount) / season.usersCount }}</h4>
+    <h4 *ngIf="user"> | Logged In User: {{ user.displayName }}</h4>
+    <button *ngIf="season.currentRound==0" (click)="startRound(season)">start</button>
+
+
+    <section *ngIf="usersObs | async as users">
+      <button (click)="susers=!susers">users</button>
+      Next Pick: {{getNextPick(season, users).displayName}}
+      <ul *ngIf="susers">
+        <li *ngFor="let user of users ">
+          Pick: <button (click)="changeUser(user)">{{ user.displayName}}</button>
+          <pre>
+            {{ user | json}}
+          </pre>
+        </li>
+      </ul>
+    </section>
+
+    <button (click)="showseason=!showseason">seasons</button>
+    <pre *ngIf="showseason">
+          {{season | json}}
+    </pre>
+    <hr>
+
+  </div>
+
+  <h1 id="newSeason">
+    {{currentSeason}}
+  </h1>
 
   <section *ngIf="usersObs | async as users">
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayoutAlign="space-around">
       <app-avatar [img]="user.photoURL" [selected]="user.id === season.members[season.nextPick]"
         *ngFor="let user of users"></app-avatar>
     </div>
-
-    <button (click)="susers=!susers">users</button>
-    Next Pick: {{getNextPick(season, users).displayName}}
-    <ul *ngIf="susers">
-      <li *ngFor="let user of users ">
-        Pick: <button (click)="changeUser(user)">{{ user.displayName}}</button>
-        <pre>
-          {{ user | json}}
-        </pre>
-      </li>
-    </ul>
   </section>
 
-  <button (click)="showseason=!showseason">seasons</button>
-  <pre *ngIf="showseason">
-        {{season | json}}
-  </pre>
 
   <section *ngIf="games">
-    <button (click)="sgames=!sgames">games</button>
-    <mat-list *ngIf="!sgames">
+    <mat-list>
       <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async">
         <!-- {{game | json}} -->
         <section matListAvatar>
@@ -80,10 +91,15 @@
     {{currentSeason}}
   </h1>
   <section *ngIf="usersObs | async as users">
+    <button mat-button color="primary" style="background: #A19060;" (click)="users=shuffle(users)">Shuffle</button>
     <div fxLayout="row" fxLayoutAlign="space-around">
-      <app-avatar [img]="user.photoURL" [selected]="false"
-        *ngFor="let user of shuffle(users)"></app-avatar>
+      <app-avatar  (click)="removeUser(user)" [img]="user.photoURL" [selected]="false" *ngFor="let user of users"></app-avatar>
     </div>
-    <button id="newSeason" style="background: #80000A" (click)="setNewSeason(users)">NEW SEASON</button>
+    <button id="newSeason" style="color: #80000A;background: #A19060;" (click)="setNewSeason(users)">NEW SEASON</button>
   </section>
+
+  <div fxLayout="row" fxLayoutAlign="space-around">
+      <app-avatar (click)="addUser(user)" [img]="user.photoURL" [selected]="false" *ngFor="let user of 'users'|fire|async"></app-avatar>
+    </div>
 </ng-template>
+

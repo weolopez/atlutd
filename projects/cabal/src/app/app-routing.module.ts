@@ -11,7 +11,7 @@ const redirectLoggedInToItems = redirectUnauthorizedTo(['home']);
 const routes: Routes = [
   { path: 'seasons/:id',
     loadChildren: () => import('./page/season/season.module').then(m => m.SeasonModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: 'poll',
     loadChildren: () => import('./page/poll/poll.module').then(m => m.PollModule),
@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   { path: 'user',
     loadChildren: () => import('./page/user/user.module').then(m => m.UserModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: 'games/:id',
     loadChildren: () => import('./page/game/game.module').then(m => m.GameModule),
