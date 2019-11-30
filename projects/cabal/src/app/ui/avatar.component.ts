@@ -3,7 +3,7 @@ import { __importDefault } from 'tslib';
 @Component({
     selector: 'app-avatar',
     template: `
-    <img [src]="img" [style.background]="(selected)?'red':'none'" >
+    <img [src]="img" [style.background]="(selected)?'#80000a': (selected2)?'#a19060':'none'" >
     `,
     styles: [`
     img {
@@ -20,4 +20,5 @@ import { __importDefault } from 'tslib';
   export class AvatarComponent {
       @Input('img') img;
       @Input('selected') selected;
+      @Input('selected2') selected2;
   }

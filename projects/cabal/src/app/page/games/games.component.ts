@@ -23,107 +23,212 @@ export class GamesComponent implements OnInit {
   public user;
   public gamez = [
     {
-      "href": "/rosters/2019/atlanta-united",
-      "name": "Atlanta United FC"
+      "id": "atlanta-united",
+      "name": "Atlanta United FC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/atl.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/chicago-fire",
-      "name": "Chicago Fire"
+      "id": "chicago-fire",
+      "name": "Chicago Fire",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/1207_200x200-0.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/fc-cincinnati",
-      "name": "FC Cincinnati"
+      "id": "fc-cincinnati",
+      "name": "FC Cincinnati",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/CIN-Logo480px_2.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/colorado-rapids",
-      "name": "Colorado Rapids"
+      "id": "colorado-rapids",
+      "name": "Colorado Rapids",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/436_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/columbus-crew-sc",
-      "name": "Columbus Crew SC"
+      "id": "columbus-crew-sc",
+      "name": "Columbus Crew SC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/CCSC-200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/fc-dallas",
-      "name": "FC Dallas"
+      "id": "fc-dallas",
+      "name": "FC Dallas",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1903_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/dc-united",
-      "name": "D.C. United"
+      "id": "dc-united",
+      "name": "D.C. United",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/1326_200x200b.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/houston-dynamo",
-      "name": "Houston Dynamo"
+      "id": "houston-dynamo",
+      "name": "Houston Dynamo",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1897_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/lafc",
-      "name": "Los Angeles Football Club"
+      "id": "lafc",
+      "name": "Los Angeles Football Club",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/98765_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/la-galaxy",
-      "name": "LA Galaxy"
+      "id": "la-galaxy",
+      "name": "LA Galaxy",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1230_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/minnesota-united",
-      "name": "Minnesota United FC"
+      "id": "minnesota-united",
+      "name": "Minnesota United FC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/6977-200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/montreal-impact",
-      "name": "Montreal Impact"
+      "id": "montreal-impact",
+      "name": "Montreal Impact",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1616_200x200_0.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/new-england-revolution",
-      "name": "New England Revolution"
+      "id": "new-england-revolution",
+      "name": "New England Revolution",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/928_200x200_0.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/new-york-city-fc",
-      "name": "New York City FC"
+      "id": "new-york-city-fc",
+      "name": "New York City FC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/nycfc-200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/new-york-red-bulls",
-      "name": "New York Red Bulls"
+      "id": "new-york-red-bulls",
+      "name": "New York Red Bulls",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/399_200x200_0.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/orlando-city",
-      "name": "Orlando City SC"
+      "id": "orlando-city",
+      "name": "Orlando City SC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/6900.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/philadelphia-union",
-      "name": "Philadelphia Union"
+      "id": "philadelphia-union",
+      "name": "Philadelphia Union",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/5513_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/portland-timbers",
-      "name": "Portland Timbers"
+      "id": "portland-timbers",
+      "name": "Portland Timbers",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/1581_200x200-0.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/real-salt-lake",
-      "name": "Real Salt Lake"
+      "id": "real-salt-lake",
+      "name": "Real Salt Lake",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1899_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/san-jose-earthquakes",
-      "name": "San Jose Earthquakes"
+      "id": "san-jose-earthquakes",
+      "name": "San Jose Earthquakes",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/1131_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/seattle-sounders",
-      "name": "Seattle Sounders FC"
+      "id": "seattle-sounders",
+      "name": "Seattle Sounders FC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/3500_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/sporting-kansas-city",
-      "name": "Sporting Kansas City"
+      "id": "sporting-kansas-city",
+      "name": "Sporting Kansas City",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/421_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/toronto-fc",
-      "name": "Toronto FC"
+      "id": "toronto-fc",
+      "name": "Toronto FC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/2077_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     },
     {
-      "href": "/rosters/2019/vancouver-whitecaps",
-      "name": "Vancouver Whitecaps FC"
+      "id": "vancouver-whitecaps",
+      "name": "Vancouver Whitecaps FC",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/1708_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
     }
   ];
+  teams = [];
+  seats = [];
   constructor(
     private db: AngularFirestore,
     private auth: AuthService,
     fs: FireService
   ) {
+    db.collection('seats').get().subscribe(t => {
+      t.forEach(data => this.seats.push(data.data()))
+    });
+
+    db.collection('teams').get().subscribe(t => {
+      t.forEach(data => this.teams.push(data.data()))
+    });
     this.items = fs.deepGetCollection('games');
     this.getUser();
   }
@@ -141,19 +246,18 @@ export class GamesComponent implements OnInit {
     this.user = await this.auth.getUser();
   }
   getGamez() {
-    this.gamez.forEach(game => {
-      //       const response = await fetch('http://example.com/movies.json');
-      // const myJson = await response.json();
-      // console.log(JSON.stringify(myJson));
-    })
+    this.fetchSeason();
+    // this.gamez.forEach(game => {
+    //   this.db.collection('teams').add(game);
+    // })
   }
   getImg(game) {
 
     this.gamez.map(async game => {
-      return this.fetchGame(game) 
+      return this.fetchGame(game)
     });
 
-console.log(JSON.stringify(this.gamez));
+    console.log(JSON.stringify(this.gamez));
   }
   async fetchGame(g) {
     let game = await fetch("https://www.mlssoccer.com/" + g.href);
@@ -162,23 +266,59 @@ console.log(JSON.stringify(this.gamez));
     elem.innerHTML = html;
 
     let images = elem.getElementsByTagName("img");
-    g.images = [];   
+    g.images = [];
     for (var i = 0; i < images.length; i++) {
-      if (images[i].src.startsWith('https://league-mp7static')) 
+      if (images[i].src.startsWith('https://league-mp7static'))
         g.images.push(images[i].src);
     }
     return g;
   }
-  //     const response = fetch("https://www.mlssoccer.com/"+src).then(response => {
-  //       let str = response.text().then( str => {
-  //         var elem= document.createElement("div");
-  // elem.innerHTML = str;
 
-  // var images = elem.getElementsByTagName("img");
+  async fetchSeason() {
+    let game = await fetch("https://www.atlutd.com/schedule?month=all&year=2019&club_options=Home");
+    let html = await game.text();
+    let elem = document.createElement("div");
+    elem.innerHTML = html;
+    let outputString = '';
 
-  // for(var i=0; i < images.length; i++){
-  //   if (images[i].src.startsWith('https://league-mp7static')) console.log(images[i].src);   
-  // }
-  //       });
-  //     });
+    let images = elem.getElementsByClassName("match_meta");
+    for (var i = 0; i < images.length; i++) {
+      outputString = outputString + images[i].innerHTML;
+    }
+    let dates = elem.getElementsByClassName("match_date");
+    let dateArray = [];
+    for (var i = 0; i < dates.length; i++) {
+      dateArray.push(dates[i].textContent);
+    }
+    let matchup = elem.getElementsByClassName("match_matchup");
+    let matchupArray = [];
+    for (var i = 0; i < matchup.length; i++) {
+      matchupArray.push(matchup[i].textContent);
+    }
+    console.dir(dateArray);
+    console.dir(matchupArray);
+    console.dir(this.teams);
+    console.dir(this.seats);
+    let season = [];
+    matchupArray.forEach((element, index, array) => {
+      let away = this.teams.filter(t => t.name.toUpperCase() == element);
+
+      if (away.length > 0) {
+        let item =
+        {
+          "id": '_' + Math.random().toString(36).substr(2, 9),
+          "season": "Cabal20",
+          "home": "teams/AUFC",
+          "date": dateArray[index],
+          "away": "teams/" + away[0]['id']
+        };
+        season.push(item);
+      }
+    })
+    console.dir(season);
+    season.forEach(g=> {
+      this.db.collection('games').add(g);
+    })
+  }
+
 }

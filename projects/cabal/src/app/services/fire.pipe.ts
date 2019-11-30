@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { tap } from 'rxjs/operators';
 /*
  * Raise the value exponentially
  * Takes an exponent argument that defaults to 1.
@@ -18,7 +19,10 @@ export class FirePipe implements PipeTransform {
 
     transform(collection: string, filter?: string): object {
         if (collection.indexOf('/') > 1)
-            return this.afs.doc(collection).valueChanges();
+            return this.afs.doc(collection).valueChanges()
+            .pipe(tap(data=>{
+                data;
+            }));
         else
             return this.afs.collection(collection).valueChanges();
     }
