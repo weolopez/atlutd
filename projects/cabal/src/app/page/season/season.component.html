@@ -13,7 +13,7 @@
   <section class="scroll">
     <app-avatar (click)="changeUser(user)" class="item" [img]="user?.photoURL"
       [selected]="user?.id === season.members[season.nextPick]" [selected2]="user?.id===loggedInUser?.id"
-      *ngFor="let user of users"></app-avatar>
+      *ngFor="let user of order(users)"></app-avatar>
   </section>
 
   <section cdkscrollable *ngIf="games" style="transform: translateY(-30px);">

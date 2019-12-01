@@ -244,4 +244,11 @@ export class SeasonComponent implements OnInit {
   submit(newMsg) {
     this.cs.sendMessage(newMsg, this.currentSeason);
   }
+  order(users) {
+    return users.sort((a,b) => {
+      let adex = this.season.members.findIndex(e=>e==a.id);
+      let bdex = this.season.members.findIndex(e=>e==b.id);
+      return (adex>bdex)?1:-1;
+    })
+  }
 }
