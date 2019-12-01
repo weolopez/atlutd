@@ -66,7 +66,7 @@
 
     <div class="scroll">
       <app-avatar class="item" (click)="removeUser(user)" [img]="user.photoURL" [selected]="false"
-        *ngFor="let user of users">
+        *ngFor="let user of shuffle(users)">
       </app-avatar>
     </div>
 
