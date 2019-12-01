@@ -21,6 +21,13 @@
   <p matLine>
     <span class="demo-2">{{currentUser.date | date:'fullDate'}}</span>
   </p>
+
+  <ul style="list-style: none;">
+    <li *ngFor="let seat of currentUser.seats"> {{ getKey(seat).date }}
+        <h4 *ngFor="let game of getKey(seat)"> {{ game.seat }} | {{game.date}} | {{game.away.split('/')[1]}} </h4>
+    </li>
+  </ul>
+
 </div>
 
 <mat-list>

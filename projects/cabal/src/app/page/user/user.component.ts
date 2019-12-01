@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import { AuthService } from '../../services/auth.service';
 import { Observable, Subject } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 export interface Item { name: string; }
 @Component({
@@ -34,7 +35,7 @@ export class UserComponent implements OnInit {
   private trigger: Subject<void> = new Subject<void>();
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
-
+  games: any;
 
   public triggerSnapshot(): void {
     this.trigger.next();
@@ -76,6 +77,10 @@ export class UserComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
+    db.collection('games').valueChanges().subscribe(g=>
+      {
+        this.games=g;
+      });
   }
 
   ngOnInit() {
@@ -96,5 +101,11 @@ export class UserComponent implements OnInit {
   async getUser() {
     this.currentUser = await this.auth.getUser();
   }
-
+  getKey(seat) {
+    let key = Object.keys(seat)[0]; 
+    if (!this.games) return;
+    let game = this.games.filter( game => game.id == key );
+    game[0].seat = seat[key];
+    return game;
+  }
 }

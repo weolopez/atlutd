@@ -317,7 +317,7 @@ export class GamesComponent implements OnInit {
     })
     console.dir(season);
     season.forEach(g=> {
-      this.db.collection('games').add(g);
+      this.db.collection('games').doc(g.id).set(g);
     })
   }
 

@@ -35,7 +35,7 @@ export class TeamsComponent implements OnInit {
     const d = JSON.parse(data);
     if (d.id) {
       this.db.collection(this.collection).doc(d.id)
-        .set(d).finally(() => location.reload());
+        .set(d);//.finally(() => location.reload());
     } else {
       this.db.collection(this.collection)
         .add(d).finally(() => location.reload());
@@ -44,7 +44,7 @@ export class TeamsComponent implements OnInit {
   get() {
     return this.db
       .collection<any>(this.collection)
-      .stateChanges()
+      .valueChanges()
       .pipe(
         map(collection =>
            collection.map( doc => {

@@ -8,6 +8,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 import { AuthService } from '../../services/auth.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChatService } from '../../services/chat.service';
 
 export interface Season {
   id: string;
@@ -19,6 +20,7 @@ export interface Season {
   members?: any[];
   seats?: any[];
   nextPick?: any;
+  messages?: Array<string>;
 }
 
 export interface User {
@@ -31,6 +33,7 @@ export interface Seat {
 }
 export interface Game {
   id: string;
+  date: string;
   seats?: any;
   away?: any;
 }
@@ -57,13 +60,16 @@ export class SeasonComponent implements OnInit {
   usersRef: AngularFirestoreDocument<unknown>
   usersObs: Observable<unknown[]>;
   
-  loggedInUser: any;
+  loggedInUser: User;
   seats: Observable<unknown[]>;
   games: Observable<unknown>;
   seatCount = 0;
   users: Array<User>;
   seasonDetails: boolean;
+  readcount = 0;
   constructor(
+
+    public cs: ChatService,
     private snackBar: MatSnackBar,
     public route: ActivatedRoute,
     public db: AngularFirestore,
@@ -73,11 +79,20 @@ export class SeasonComponent implements OnInit {
     auth.getUser().then(user => {
       this.loggedInUser = user;
     })
-
     this.currentSeason = this.route.snapshot.paramMap.get('id');
+    
     this.seasonRef = db.collection('seasons').doc(this.currentSeason);
     this.seasonObs = this.seasonRef.valueChanges();
     this.seasonObs.subscribe( (s: Season) => this.season = s);
+    this.cs.get(this.currentSeason).subscribe( s => {
+      if (!s.messages) s.messages = [];
+      if (s.messages.length>this.readcount) {
+        this.snackBar.open(s.messages[s.messages.length-1].content, 'Close', {
+          duration: 3000
+        });
+        this.readcount = s.messages.length;
+      }
+    });
 
     this.usersObs = this.db.collection('users', ref =>
       ref.where('season', '==', this.currentSeason)).valueChanges();
@@ -124,12 +139,7 @@ export class SeasonComponent implements OnInit {
 
       })
     })
-
-    // this.seasonObs
-    // .pipe(map(season => (season) ? season : { id: this.currentSeason }))
-    // .pipe(mergeMap(season => users.pipe(map(users=>{ season['users'] = users; return season; }))))
-    // .pipe(mergeMap(season => seats.pipe(map(seats=>{ season['seats'] = seats; return season; }))))
-  }
+}
 
   ngOnInit() {
     // counts of appearances for all possible permutations
@@ -153,11 +163,11 @@ export class SeasonComponent implements OnInit {
     }
   }
   setNewSeason(users: Array<any>) {
-
     this.db.collection('seasons').doc(this.currentSeason).set({ id: this.currentSeason, currentRound: 1, members: [] });
     this.games.subscribe(games => this.update({ gamesCount: games['length'] }));
     this.update({ usersCount: users.length, members: users.map(u => u.id), nextPick: 0 });
     this.seats.subscribe(seats => this.update({ seatsCount: seats.length }));
+    this.cs.create(this.currentSeason);
   }
   startRound(season) {
     const rounds = (season.gamesCount * season.seatsCount) / season.usersCount;
@@ -177,7 +187,7 @@ export class SeasonComponent implements OnInit {
   update(data) {
     this.seasonRef.update(data);
   }
-  pick(game, seat, season) {
+  pick(game: Game, seat, season) {
     let message = (game.seats[seat].length>1) ? 'Seat '+seat+' Not Available' :
       (season.members[season.nextPick] !== this.loggedInUser.id) ?
         'It is ' + this.users.filter(u=>u.id===season.members[season.nextPick] )[0].displayName  +' turn' : null;
@@ -205,10 +215,14 @@ export class SeasonComponent implements OnInit {
           nextpi = 0;
           nextRound = nextRound + 1;
         }
+        message = this.loggedInUser.displayName + ' selected seat ' 
+        + seat + ' on ' + game.date;
+        this.submit( message );
         this.update({
           nextPick: nextpi,
           currentRound: nextRound
         })
+
       })
   }
   changeUser(user) {
@@ -216,7 +230,7 @@ export class SeasonComponent implements OnInit {
   }
 
   addUser(user) {
-    this.db.doc('users/' + user.id).update({ season: this.currentSeason });
+    this.db.doc('users/' + user.uid).update({ id: user.uid, season: this.currentSeason, seats: [] });
   }
   removeUser(user) {
     this.db.doc('users/' + user.id).update({ season: '' });
@@ -226,4 +240,8 @@ export class SeasonComponent implements OnInit {
     return users.filter(user => user.id === np)[0];
   }
   getLength(seats) { return Object.keys(seats); }
+
+  submit(newMsg) {
+    this.cs.sendMessage(newMsg, this.currentSeason);
+  }
 }

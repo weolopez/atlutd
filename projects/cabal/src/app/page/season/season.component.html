@@ -16,7 +16,7 @@
       *ngFor="let user of users"></app-avatar>
   </section>
 
-  <section *ngIf="games" style="transform: translateY(-30px);">
+  <section cdkscrollable *ngIf="games" style="transform: translateY(-30px);">
     <mat-list>
       <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async">
         
@@ -75,7 +75,7 @@
 
   <section class="scroll">
     <app-avatar class="item" (click)="addUser(user)" [img]="user.photoURL" [selected]="false"
-      *ngFor="let user of users"></app-avatar>
+      *ngFor="let user of 'users' | fire | async "></app-avatar>
   </section>
 
 

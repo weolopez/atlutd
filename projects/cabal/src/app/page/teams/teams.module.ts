@@ -6,6 +6,8 @@ import { TeamsComponent } from './teams.component';
 import {MatListModule} from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
+import { ServiceModule } from '../../services/service.module';
+;
 
 @NgModule({
   declarations: [TeamsComponent],
@@ -17,7 +19,8 @@ import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/mate
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    ServiceModule
   ]
 })
 export class TeamsModule { }

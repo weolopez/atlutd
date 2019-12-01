@@ -28,11 +28,14 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     // this.scrollList = this.scrollList.nativeElement;
     const chatId = this.route.snapshot.paramMap.get('id');
-    const source = this.cs.get(chatId);
-    this.chat$ = this.cs.joinUsers(source)
-       .pipe(tap(v => this.scroll()));
-
-    // this.userChats$ = this.cs.getUserChats();
+    this.chat$ =  this.cs.get(chatId)
+         .pipe(tap(v => {
+           if (!v.id) {
+             this.cs.create(chatId).then(result => location.reload());
+            //  ;
+           }
+           this.scroll();
+         }));
   }
 
   submit(newMsg) {

@@ -6,18 +6,19 @@ import { SeasonComponent } from './season.component';
 import {MatListModule} from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatSnackBarModule } from '@angular/material';
-import { FirePipe } from '../../services/fire.pipe';
 import { AvatarComponent } from '../../ui/avatar.component';
+import { ServiceModule } from '../../services/service.module';
 
 @NgModule({
-  declarations: [SeasonComponent, FirePipe, AvatarComponent],
+  declarations: [SeasonComponent, AvatarComponent],
   imports: [
     CommonModule,
     SeasonRoutingModule,
     MatListModule,
     MatButtonModule,
     FlexLayoutModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ServiceModule
   ]
 })
 export class SeasonModule { }

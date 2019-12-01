@@ -20,17 +20,15 @@ export class ChatService {
 
   get(chatId) {
     this.chatId = chatId;
-    return this.afs
-      .collection<any>('chats')
-      .doc(chatId)
-      .snapshotChanges()
-      .pipe(
-        map(doc => {
-          // document.getElementById('chatlist')
-          //   .scrollTop = document.getElementById('chatlist').scrollHeight;
-          return { id: doc.payload.id, ...doc.payload.data() };
-        })
-      );
+    return this.joinUsers(this.afs
+        .collection<any>('chats')
+        .doc(chatId)
+        .snapshotChanges()
+        .pipe(
+          map(doc => {
+           return { id: doc.payload.id, ...doc.payload.data() }
+          })
+        ));
   }
 
   getUserChats() {
@@ -52,19 +50,15 @@ export class ChatService {
     );
   }
 
-  async create() {
-    const { uid } = await this.auth.getUser();
-
+  create(id) {
     const data = {
-      uid,
+      id: id,
+      uid: 'system',
       createdAt: Date.now(),
       count: 0,
       messages: []
     };
-
-    const docRef = await this.afs.collection('chats').add(data);
-
-    return this.router.navigate(['chats', docRef.id]);
+    return this.afs.collection('chats').doc(id).set(data);
   }
 
   async sendMessage(content, chatId?) {
@@ -106,6 +100,7 @@ export class ChatService {
 
     return chat$.pipe(
       switchMap(c => {
+        if (!c.uid) return of([]);
         // Unique User IDs
         chat = c;
         const uids = Array.from(new Set(c.messages.map(v => v.uid)));
@@ -118,6 +113,7 @@ export class ChatService {
         return userDocs.length ? combineLatest(userDocs) : of([]);
       }),
       map(arr => {
+        if (!chat) return of([]); 
         arr.forEach(v => (joinKeys[(v as any).uid] = v));
         chat.messages = chat.messages.map(v => {
           return { ...v, user: joinKeys[v.uid] };

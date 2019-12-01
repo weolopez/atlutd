@@ -20,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FirePipe } from './services/fire.pipe';
 
+
 @NgModule({
   declarations: [AppComponent, ChatComponent,
     HomeComponent],
@@ -42,7 +43,6 @@ import { FirePipe } from './services/fire.pipe';
     AngularFireStorageModule,
     NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ],
-  providers: [AngularFireAuthGuard, FirePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
