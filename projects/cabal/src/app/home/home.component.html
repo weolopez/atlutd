@@ -3,10 +3,12 @@
 <img src="/assets/frame.png" style="border-radius: 0;">
 
 
-    <h3>My Chats</h3>
-    <ul>
-      <li *ngFor="let chat of userChats$ | async">
-        <a [routerLink]="'chats/' + chat.id">{{ chat.id }} - {{ chat.messages.length }} Messages </a>
-      </li>
-    </ul>
+<button (click)="showContract = !showContract"
+style="width:100%;text-align: center;"
+mat-raised-button color="accent">
+<mat-icon>assignment</mat-icon>Contract</button>
+<iframe *ngIf="showContract"
+style="width: 100%;height:100%"
+src="https://docs.google.com/document/d/e/2PACX-1vSVlMDWQ8-VVBWNXFA99UxK6Q0CyERNObiZ6HLCg5fTXP7cJeNJRgd0BZGVXbb_O8tWr_Vscp2yQ9C-/pub?embedded=true">
+</iframe>
 

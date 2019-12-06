@@ -9,6 +9,7 @@ import { ChatService } from '../services/chat.service';
 })
 export class HomeComponent implements OnInit {
   userChats$;
+  showContract;
   constructor(public auth: AuthService, public cs: ChatService) {}
 
   ngOnInit() {
