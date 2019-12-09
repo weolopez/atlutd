@@ -13,16 +13,17 @@ export const environment = {
     storageBucket: 'mls-pts.appspot.com',
     messagingSenderId: '360578839419',
     appId: '1:360578839419:web:fb4ac180cd3c8cfc'
-  },
-  firebaseConfig: {
-    apiKey: 'AIzaSyBD9lht_cqMbZqplR0oliUndxJzygqJdRQ',
-    authDomain: 'cabal-69660.firebaseapp.com',
-    databaseURL: 'https://cabal-69660.firebaseio.com',
-    projectId: 'cabal-69660',
-    storageBucket: '',
-    messagingSenderId: '401353698652',
-    appId: '1:401353698652:web:0512a5217145aab6'
   }
+  // ,
+  // firebaseConfig: {
+  //   apiKey: 'AIzaSyBD9lht_cqMbZqplR0oliUndxJzygqJdRQ',
+  //   authDomain: 'cabal-69660.firebaseapp.com',
+  //   databaseURL: 'https://cabal-69660.firebaseio.com',
+  //   projectId: 'cabal-69660',
+  //   storageBucket: '',
+  //   messagingSenderId: '401353698652',
+  //   appId: '1:401353698652:web:0512a5217145aab6'
+  // }
 };
 
 /*

@@ -18,14 +18,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'edit',
-    loadChildren: () => import('./page/teams/teams.module').then(m => m.TeamsModule),
+    loadChildren: () => import('./page/edit/edit.module').then(m => m.EditModule),
     canActivate: [AuthGuard]
   },
   { path: 'user',
     loadChildren: () => import('./page/user/user.module').then(m => m.UserModule),
     canActivate: [AuthGuard]
   },
-  { path: 'games/:id',
+  { path: 'game',
     loadChildren: () => import('./page/game/game.module').then(m => m.GameModule),
     canActivate: [AuthGuard]
   },

@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "mls-pts"
+  },
+  "targets": {
+    "mls-pts": {
+      "hosting": {
+        "cabal": [
+          "mls-pts"
+        ],
+        "mls-pts": [
+          "public"
+        ]
+      }
+    }
   }
 }

@@ -1,24 +1,44 @@
 import { Component, ViewChild, Input } from '@angular/core'
-import { __importDefault } from 'tslib';
 @Component({
     selector: 'app-avatar',
     template: `
-    <img [src]="img" [style.background]="(selected)?'#80000a': (selected2)?'#a19060':'none'" >
-    `,
+    <div class="pie-wrapper"
+         [style.background]="(selected)?'#80000a': (selected2)?'#a19060':''">
+        <img *ngIf="img else noImage"
+            class="pie"
+            [src]="img"> 
+        <ng-template #noImage>
+                <div class="pie">{{letter}}</div>
+        </ng-template>
+    </div>
+            `,
     styles: [`
-    img {
-        background: red;
-        padding: 10px;
-        margin: 10px;
+    .pie {
+        transform: translate(5px, 5px); 
+        background: silver;
         width: 55px;
         height: 55px;
         border-radius: 50%;
         object-fit: cover;
-    }
+        color: blue;
+        font-size: 44px;
+        font-family: sans-serif;
+        text-align: center;
+      }
+
+    .pie-wrapper {
+        display: block;
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
     `]
   })
   export class AvatarComponent {
       @Input('img') img;
+      @Input('letter') letter;
       @Input('selected') selected;
       @Input('selected2') selected2;
+      noImage;
   }

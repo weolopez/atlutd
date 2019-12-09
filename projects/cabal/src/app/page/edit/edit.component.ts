@@ -12,11 +12,11 @@ export interface Team {
 }
 export interface Item { name: string; }
 @Component({
-  selector: 'app-teams',
-  templateUrl: './teams.component.html',
-  styleUrls: ['./teams.component.scss']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class TeamsComponent implements OnInit {
+export class EditComponent implements OnInit {
 
   private itemDoc: AngularFirestoreDocument<Item>;
   public items: Observable<any[]>;

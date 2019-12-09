@@ -25,8 +25,7 @@ export class GameComponent implements OnInit {
       private auth: AuthService,
       private fs: FireService
     ) {
-      this.id = this.route.snapshot.paramMap.get('id');
-      this.items = fs.deepGetDoc('games', this.id);
+      this.items = db.collection('games').valueChanges();
       this.getUser();
   }
 

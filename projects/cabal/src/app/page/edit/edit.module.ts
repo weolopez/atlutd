@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TeamsRoutingModule } from './teams-routing.module';
-import { TeamsComponent } from './teams.component';
+import { EditRoutingModule } from './edit-routing.module';
+import { EditComponent } from './edit.component';
 import {MatListModule} from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
 import { ServiceModule } from '../../services/service.module';
-;
 
 @NgModule({
-  declarations: [TeamsComponent],
+  declarations: [EditComponent],
   imports: [
     CommonModule,
-    TeamsRoutingModule,
+    EditRoutingModule,
     MatListModule,
     ReactiveFormsModule,
     FormsModule,
@@ -23,4 +22,4 @@ import { ServiceModule } from '../../services/service.module';
     ServiceModule
   ]
 })
-export class TeamsModule { }
+export class EditModule { }

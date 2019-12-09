@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { ChatService } from './services/chat.service';
-import { AuthProcessService } from 'ngx-auth-firebaseui';
+// import { AuthProcessService } from 'ngx-auth-firebaseui';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +12,19 @@ export class AppComponent {
   title = 'Season Tickets';
   public loggedIn = false;
   public showProviders = false;
+  user;
+  showUser=false;
   constructor(
     public cs: ChatService,
-    public afAuth: AuthProcessService,
+    // public afAuth: AuthProcessService,
     public auth: AuthService
   ) {
-    auth.getUser().then(event => {
+    auth.getUser().subscribe(event => {
       this.loggedIn = (!event) ? false : true;
-      if (event) { auth.updateUserData(event); }
+      if (event) { 
+        auth.updateUserData(event); 
+        this.user = event;
+      }
     });
   }
-  
 }

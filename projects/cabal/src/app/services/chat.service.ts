@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { firestore } from 'firebase/app';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Observable, combineLatest, of } from 'rxjs';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 
@@ -64,7 +64,7 @@ export class ChatService {
   async sendMessage(content, chatId?) {
     chatId = (chatId) ?  chatId : this.chatId;
 
-    const { uid } = await this.auth.getUser();
+    const { uid } = await this.auth.getUser().toPromise();
 
     const data = {
       uid,
@@ -81,7 +81,7 @@ export class ChatService {
   }
 
   async deleteMessage(chat, msg) {
-    const { uid } = await this.auth.getUser();
+    const { uid } = await this.auth.getUser().toPromise();
 
     const ref = this.afs.collection('chats').doc(chat.id);
     console.log(msg);
@@ -107,14 +107,21 @@ export class ChatService {
 
         // Firestore User Doc Reads
         const userDocs = uids.map(u =>
-          this.afs.doc(`users/${u}`).valueChanges()
+          this.afs.doc(`users/${u}`).valueChanges().pipe(
+            tap(d=> {
+              return d;
+            })
+          )
         );
 
         return userDocs.length ? combineLatest(userDocs) : of([]);
       }),
       map(arr => {
         if (!chat) return of([]); 
-        arr.forEach(v => (joinKeys[(v as any).uid] = v));
+        arr.forEach(v => {
+          if (!v) return;
+          return (joinKeys[(v as any).uid] = v)
+        });
         chat.messages = chat.messages.map(v => {
           return { ...v, user: joinKeys[v.uid] };
         });

@@ -1,4 +1,4 @@
-<div *ngIf="currentUser" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="user | async as currentUser" fxLayout="column" fxLayoutAlign="center center">
   <div *ngIf="showWebcam" fxLayout="column" fxLayoutAlign="center center">
     <webcam [height]="200" [width]="200" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
       [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
@@ -10,13 +10,13 @@
   <img [height]="200" [width]="200" *ngIf="!showWebcam" (click)="showWebcam=!showWebcam" matListAvatar
     [src]="(webcamImage) ? webcamImage : currentUser.photoURL" alt="...">
 
-    <button matButton *ngIf="webcamImage" id="snap"  (click)="updateProfileImage();">Update Profile Image</button>
+    <button matButton *ngIf="webcamImage" id="snap"  (click)="updateProfileImage(currentUser);">Update Profile Image</button>
 
-  <h3 #displayName matLine (blur)="updateDisplayName(displayName.innerText)" contenteditable> {{currentUser.displayName}} </h3>
+  <h3 #displayName matLine (blur)="updateDisplayName(currentUser, displayName.innerText)" contenteditable> {{currentUser.displayName}} </h3>
   <p matLine>
     <span> {{currentUser.email}} </span>
   </p>
-  <p matLine #sms (blur)="updateSMS(sms.innerText)" contenteditable> {{(currentUser.phoneNumber)?currentUser.phoneNumber:'enter sms number'}} 
+  <p matLine #sms (blur)="updateSMS(currentUser, sms.innerText)" contenteditable> {{(currentUser.phoneNumber)?currentUser.phoneNumber:'enter sms number'}} 
   </p>
   <p matLine>
     <span class="demo-2">{{currentUser.date | date:'fullDate'}}</span>
@@ -30,10 +30,13 @@
 
 </div>
 
-<mat-list>
+<h1 id="showUsers" style="color: #80000A;background: #A19060;" (click)="showUsers=!showUsers">Show Users</h1>
+
+<mat-list *ngIf="showUsers">
   <div *ngFor="let user of users | async">
     <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
-      <img matListAvatar [src]="user.photoURL" alt="...">
+      <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
+      [letter]="user.displayName.charAt(0)"></app-avatar>
       <h3 matLine> {{user.displayName}} </h3>
       <p matLine>
         <span> {{user.email}} </span>

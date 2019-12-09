@@ -8,8 +8,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {WebcamModule} from 'ngx-webcam';
 import { MatButtonModule } from '@angular/material';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AvatarComponent } from '../../ui/avatar.component';
 @NgModule({
-  declarations: [UserComponent],
+  declarations: [UserComponent, AvatarComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

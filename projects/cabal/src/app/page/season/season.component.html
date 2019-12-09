@@ -12,6 +12,7 @@
 
   <section class="scroll">
     <app-avatar (click)="changeUser(user)" class="item" [img]="user?.photoURL"
+      [letter]="user.displayName.charAt(0)"
       [selected]="user?.id === season.members[season.nextPick]" [selected2]="user?.id===loggedInUser?.id"
       *ngFor="let user of order(users)"></app-avatar>
   </section>
@@ -57,26 +58,30 @@
 
 
 </main>
-<ng-template #newSeason>
+<ng-template #newSeason >
   <h1 id="newSeason">
-    {{currentSeason}}
+    {{currentSeason}} 
   </h1>
   <section>
     <button mat-button color="primary" style="background: #A19060;" (click)="users=shuffle(users)">Shuffle</button>
 
     <div class="scroll">
       <app-avatar class="item" (click)="removeUser(user)" [img]="user.photoURL" [selected]="false"
-        *ngFor="let user of shuffle(users)">
+        [letter]="user.displayName.charAt(0)"  
+        *ngFor="let user of users">
       </app-avatar>
     </div>
 
-    <h1 id="newSeason" style="color: #80000A;background: #A19060;" (click)="setNewSeason(users)">NEW SEASON</h1>
   </section>
+  
+  <div *ngIf="loggedInUser?.displayName ==='Mauricio Lopez'">
+  <h1 id="newSeason" style="color: #80000A;background: #A19060;" (click)="setNewSeason(users)">NEW SEASON</h1>
 
   <section class="scroll">
     <app-avatar class="item" (click)="addUser(user)" [img]="user.photoURL" [selected]="false"
+      [letter]="user.displayName.charAt(0)"
       *ngFor="let user of 'users' | fire | async "></app-avatar>
   </section>
-
+  </div>
 
 </ng-template>

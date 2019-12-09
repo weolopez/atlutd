@@ -67,6 +67,8 @@ export class SeasonComponent implements OnInit {
   users: Array<User>;
   seasonDetails: boolean;
   readcount = 0;
+  try = true;
+  newSeason: any;
   constructor(
 
     public cs: ChatService,
@@ -76,7 +78,7 @@ export class SeasonComponent implements OnInit {
     fs: FireService,
     public auth: AuthService,
   ) {
-    auth.getUser().then(user => {
+    auth.getUser().subscribe(user => {
       this.loggedInUser = user;
     })
     this.currentSeason = this.route.snapshot.paramMap.get('id');
@@ -245,6 +247,7 @@ export class SeasonComponent implements OnInit {
     this.cs.sendMessage(newMsg, this.currentSeason);
   }
   order(users) {
+    if (!users) return users;
     return users.sort((a,b) => {
       let adex = this.season.members.findIndex(e=>e==a.id);
       let bdex = this.season.members.findIndex(e=>e==b.id);

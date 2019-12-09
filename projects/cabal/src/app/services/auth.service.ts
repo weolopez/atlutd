@@ -13,8 +13,16 @@ import { switchMap, first, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  switchUser(id: any) {
+    this.manualUserId = id;
+    this.manualUser$=this.afs.doc('users/'+id).valueChanges().pipe(
+      tap(u=>this.manualUser = u)
+    );
+  }
   user$: Observable<any>;
-
+  manualUser$: Observable<any>;
+  manualUserId: string;
+  manualUser: any;
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -32,8 +40,10 @@ export class AuthService {
     );
   }
 
-  getUser() {
-    return this.user$.pipe(first()).toPromise();
+  getUser():  Observable<any>{
+    if (this.manualUser$) return this.manualUser$
+      .pipe(first());
+    return this.user$.pipe(first());
   }
 
   googleSignIn() {
@@ -43,7 +53,7 @@ export class AuthService {
 
   private async oAuthLogin(provider) {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
-   // return this.updateUserData(credential.user);
+    location.reload();
   }
 
   public updateUserData({ uid, email, displayName, photoURL, phoneNumber }) {
@@ -65,6 +75,6 @@ export class AuthService {
 
   async signOut() {
     await this.afAuth.auth.signOut();
-    return this.router.navigate(['/']);
+    location.reload();
   }
 }

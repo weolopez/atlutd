@@ -13,8 +13,6 @@ export interface Item { name: string; }
 })
 export class UserComponent implements OnInit {
 
-  public currentUser = { uid: '', photoURL: '', displayName: '',
-    email: '', date: '', phoneNumber: ''  };
   private itemDoc: AngularFirestoreDocument<Item>;
   public users: Observable<any[]>;
   public showWebcam = false;
@@ -22,6 +20,7 @@ export class UserComponent implements OnInit {
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
   public deviceId: string;
+  showUsers=false;
   public videoOptions: MediaTrackConstraints = {
     // width: {ideal: 1024},
     // height: {ideal: 576}
@@ -36,6 +35,8 @@ export class UserComponent implements OnInit {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
   games: any;
+  currentUser: any;
+  user: Observable<any>;
 
   public triggerSnapshot(): void {
     this.trigger.next();
@@ -86,20 +87,20 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
-  updateProfileImage() {
-    this.currentUser.photoURL = this.webcamImage;
-    this.auth.updateUserData(this.currentUser).then(this.webcamImage = undefined);
+  updateProfileImage(currentUser) {
+    currentUser.photoURL = this.webcamImage;
+    this.auth.updateUserData(currentUser).then(this.webcamImage = undefined);
   }
-  updateDisplayName(name) {
-    this.currentUser.displayName = name;
-    this.auth.updateUserData(this.currentUser).then(this.webcamImage = undefined);
+  updateDisplayName(currentUser, name) {
+    currentUser.displayName = name;
+    this.auth.updateUserData(currentUser).then(this.webcamImage = undefined);
   }
-  updateSMS(phoneNumber) {
-    this.currentUser.phoneNumber = phoneNumber;
-    this.auth.updateUserData(this.currentUser).then();
+  updateSMS(currentUser, phoneNumber) {
+    currentUser.phoneNumber = phoneNumber;
+    this.auth.updateUserData(currentUser).then();
   }
-  async getUser() {
-    this.currentUser = await this.auth.getUser();
+  getUser() {
+    this.user = this.auth.getUser();
   }
   getKey(seat) {
     let key = Object.keys(seat)[0]; 
@@ -107,5 +108,9 @@ export class UserComponent implements OnInit {
     let game = this.games.filter( game => game.id == key );
     game[0].seat = seat[key];
     return game;
+  }
+  switchUser(id) {
+    this.auth.switchUser(id);
+    this.getUser();
   }
 }

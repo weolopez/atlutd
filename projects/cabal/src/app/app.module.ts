@@ -13,17 +13,17 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
-import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FirePipe } from './services/fire.pipe';
+import { AvatarComponent } from './ui/avatar.component';
+
 
 
 @NgModule({
   declarations: [AppComponent, ChatComponent,
-    HomeComponent],
+    HomeComponent, AvatarComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -39,9 +39,8 @@ import { FirePipe } from './services/fire.pipe';
     MatButtonModule,
     MatIconModule,
     FlexLayoutModule,
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireAuthModule,
     AngularFireStorageModule,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebase)
   ],
   bootstrap: [AppComponent]
 })
