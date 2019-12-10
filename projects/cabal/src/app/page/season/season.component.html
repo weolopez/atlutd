@@ -10,7 +10,7 @@
     <h4>Number of Rounds: {{ (season.gamesCount * seatCount) / season.usersCount }}</h4>
   </section>
 
-  <section class="scroll">
+  <section class="scroll" *ngIf="users">
     <app-avatar (click)="changeUser(user)" class="item" [img]="user?.photoURL"
       [letter]="user.displayName.charAt(0)"
       [selected]="user?.id === season.members[season.nextPick]" [selected2]="user?.id===loggedInUser?.id"
@@ -19,11 +19,17 @@
 
   <section cdkscrollable *ngIf="games" style="transform: translateY(-30px);">
     <mat-list>
-      <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async">
-        
-        <h4 style="color:#A19060; position: absolute;top:10px">
-            {{game.date}} </h4>
-        <mat-list-item style="margin-top: 65px">
+      <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async; let i=index">
+        <h4 style="position: absolute;top:10px">
+           <span (click)="gameStar[i]=!gameStar[i]"
+           >{{ (gameStar[i]) ? '&#11088;':'&#9733;'}} </span>
+          <span (click)="gameVisibility[i]=!gameVisibility[i]"
+        style="color:#A19060; ">{{game.date}} 
+        </span>
+      </h4>
+        <mat-list-item 
+            *ngIf="!gameVisibility[i]"
+              style="margin-top: 80px">
           <div matListAvatar>
             <div class="pieContainer">
               <div class="pieBackground"></div>

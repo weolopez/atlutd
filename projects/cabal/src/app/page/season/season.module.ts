@@ -5,7 +5,7 @@ import { SeasonRoutingModule } from './season-routing.module';
 import { SeasonComponent } from './season.component';
 import {MatListModule} from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule, MatSnackBarModule } from '@angular/material';
+import { MatButtonModule, MatSnackBarModule, MatIconModule } from '@angular/material';
 import { AvatarComponent } from '../../ui/avatar.component';
 import { ServiceModule } from '../../services/service.module';
 
@@ -15,6 +15,7 @@ import { ServiceModule } from '../../services/service.module';
     CommonModule,
     SeasonRoutingModule,
     MatListModule,
+    MatIconModule,
     MatButtonModule,
     FlexLayoutModule,
     MatSnackBarModule,
