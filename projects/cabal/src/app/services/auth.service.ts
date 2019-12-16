@@ -20,6 +20,7 @@ export class AuthService {
     );
   }
   user$: Observable<any>;
+  userId: string;
   manualUser$: Observable<any>;
   manualUserId: string;
   manualUser: any;
@@ -31,6 +32,7 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
+          this.userId = user.uid;
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges().pipe(
             tap()); // this.updateUserData(u)));
         } else {

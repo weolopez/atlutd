@@ -21,8 +21,9 @@
     <mat-list>
       <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async; let i=index">
         <h4 style="position: absolute;top:10px">
-           <span (click)="gameStar[i]=!gameStar[i]"
-           >{{ (gameStar[i]) ? '&#11088;':'&#9733;'}} </span>
+           <span 
+                (click)="star(game.id)"
+           >{{ (loggedInUser?.star[game.id]) ? '&#11088;':'&#9733;'}} </span>
           <span (click)="gameVisibility[i]=!gameVisibility[i]"
         style="color:#A19060; ">{{game.date}} 
         </span>

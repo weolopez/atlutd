@@ -27,6 +27,8 @@ export interface User {
   id: string;
   photoURL: string;
   displayName: string;
+  star: any;
+  seats: any;
 }
 export interface Seat {
   id: string;
@@ -81,7 +83,7 @@ export class SeasonComponent implements OnInit {
     public auth: AuthService,
   ) {
     auth.getUser().subscribe(user => {
-      this.loggedInUser = user;
+      this.changeUser(user);
     })
     this.currentSeason = this.route.snapshot.paramMap.get('id');
     
@@ -121,6 +123,7 @@ export class SeasonComponent implements OnInit {
             .pipe(map(games => {
               let usersObject = {};
               users.forEach(user => {
+                if (!user['seats']) user['seats']=[];
                 user['seats'].forEach(g => {
                   const GAMEID = Object.keys(g)[0];
                   const SEATID = g[GAMEID];
@@ -173,6 +176,11 @@ export class SeasonComponent implements OnInit {
   update(data) {
     this.seasonRef.update(data);
   }
+  star(id) {
+    const star=this.loggedInUser.star;
+    star[id]=!star[id];
+    this.db.doc('users/'+this.loggedInUser.id).set({star}, { merge: true } ); 
+  }
   pick(game: Game, seat, season) {
     let message = (game.seats[seat].length>1) ? 'Seat '+seat+' Not Available' :
       (season.members[season.nextPick] !== this.loggedInUser.id) ?
@@ -189,6 +197,7 @@ export class SeasonComponent implements OnInit {
         let s = {};
         s[game.id] = seat;
         const seats = data;
+        if (!seats['seats']) seats['seats']=[];
         const result = seats['seats'].filter(aseat => {
           return JSON.stringify(aseat) === JSON.stringify(s);
         });
@@ -211,6 +220,8 @@ export class SeasonComponent implements OnInit {
       })
   }
   changeUser(user) {
+    if (this.auth.userId != 'yLWEBMNYfleyhc4mG7aDPhSHSYe2') return;
+    if (!user.star) user.star = {};
     this.loggedInUser = user;
   }
 
