@@ -109,6 +109,14 @@ export class UserComponent implements OnInit {
     game[0].seat = seat[key];
     return game;
   }
+
+  getGame(item) {
+    let gameId = item.key;
+    let isStar = item.value
+    if (!isStar) return;
+    let game = this.games.filter(game => game.id == gameId)
+    return game;
+  }
   switchUser(id) {
     this.auth.switchUser(id);
     this.getUser();

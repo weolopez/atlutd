@@ -19,7 +19,7 @@
 
   <section cdkscrollable *ngIf="games" style="transform: translateY(-30px);">
     <mat-list>
-      <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async; let i=index">
+      <mat-list-item style="height: auto;margin-top: 30px;" *ngFor="let game of games | async | sort; let i=index">
         <h4 style="position: absolute;top:10px">
            <span 
                 (click)="star(game.id)"

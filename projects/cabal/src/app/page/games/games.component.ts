@@ -87,6 +87,22 @@ export class GamesComponent implements OnInit {
       ]
     },
     {
+      "id": "inter_miami_cf",
+      "name": "INTER MIAMI CF",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1897_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ]
+    },
+    {
+      "id": "nashville_sc",
+      "images": [
+        "https://league-mp7static.mlsdigital.net/mp6/1897_200x200.png",
+        "https://league-mp7static.mlsdigital.net/styles/image_thumbnail/s3/images/mls-logo.png?null&itok=gOJ49TyJ&c=cb3748b521321e50a5653a3d134a10f1"
+      ],
+      "name": "Nashville SC"
+    },
+    {
       "id": "lafc",
       "name": "Los Angeles Football Club",
       "images": [
@@ -275,7 +291,7 @@ export class GamesComponent implements OnInit {
   }
 
   async fetchSeason() {
-    let game = await fetch("https://www.atlutd.com/schedule?month=all&year=2019&club_options=Home");
+    let game = await fetch("https://www.atlutd.com/schedule?month=all&year=2020&club_options=Home");
     let html = await game.text();
     let elem = document.createElement("div");
     elem.innerHTML = html;

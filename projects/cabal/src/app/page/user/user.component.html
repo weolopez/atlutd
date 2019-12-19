@@ -28,6 +28,13 @@
     </li>
   </ul>
 
+  <ul style="list-style: none;">
+    <li *ngFor="let item of currentUser.star | keyvalue">
+      <div *ngFor="let game of getGame(item)">
+        <h4> {{game?.date}} | {{game.away?.split('/')[1]}} </h4>
+      </div>
+    </li>
+  </ul>
 </div>
 
 <h1 id="showUsers" style="color: #80000A;background: #A19060;" (click)="showUsers=!showUsers">Show Users</h1>
