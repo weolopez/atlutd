@@ -4,10 +4,17 @@
   </h1>
 
   <section *ngIf="seasonDetails">
-    <h4>Total Games:{{season.gamesCount}}</h4>
-    <h4>Number of Seats: {{seatCount}}</h4>
-    <h4>Number of Users: {{season.usersCount }}</h4>
-    <h4>Number of Rounds: {{ (season.gamesCount * seatCount) / season.usersCount }}</h4>
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <h4>Total Games:{{season.gamesCount}}</h4>
+      <h4>Number of Seats: {{seatCount}}</h4>
+      <h4>Number of Users: {{season.usersCount }}</h4>
+      <h4>Number of Rounds: {{ (season.gamesCount * seatCount) / season.usersCount }}</h4>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <h4 [style.background]="'#A19060'">Seats A</h4>
+      <h4 [style.background]="'#80000A'">Seats B</h4>
+      <h4 [style.background]="'black'">Seats C</h4>
+    </div>
   </section>
 
   <section class="scroll" *ngIf="users">
