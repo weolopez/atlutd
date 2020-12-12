@@ -26,7 +26,7 @@ export class ChatService {
         .snapshotChanges()
         .pipe(
           map(doc => {
-           return { id: doc.payload.id, ...doc.payload.data() }
+           return { id: doc.payload.id, ...doc.payload.data() as {} }
           })
         ));
   }
@@ -42,7 +42,7 @@ export class ChatService {
               return actions.map(a => {
                 const data = a.payload.doc.data();
                 const id = a.payload.doc.id;
-                return { id, ...data };
+                return { id, ...data as {} };
               });
             })
           );

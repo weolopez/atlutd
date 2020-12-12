@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { MatList } from '@angular/material';
+import { MatList } from '@angular/material/list';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 
 @Component({
