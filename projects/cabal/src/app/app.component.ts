@@ -9,7 +9,7 @@ import { ChatService } from './services/chat.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Season Tickets';
+  title = 'Cabal';
   public loggedIn = false;
   public showProviders = false;
   user;
