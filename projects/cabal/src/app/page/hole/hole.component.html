@@ -1,0 +1,65 @@
+<!-- <div *ngIf="user | async as currentUser" fxLayout="column" fxLayoutAlign="center center"> -->
+<!-- {{g|json}} -->
+  <!-- <div class="user" *ngFor="let game of g"> -->
+  <main class="slider">
+    <section class="hslide" *ngFor="let hole of holes">
+      <article class="hole flexcontainer">
+        <div id="holeNumber">{{hole.hole}}</div>
+        <div fxLayout="row" fxLayoutAlign="center center" id="flexcontainer">
+          <div class="par" (click)="hole.score=hole.score-1">{{hole.par}}</div>
+          <div class="score" (click)="hole.score=hole.score+1">{{hole.score}}</div>
+        </div>
+      </article>
+    </section>
+  </main>
+<!-- </div> -->
+
+  <!-- <button matButton *ngIf="webcamImage" id="snap"  (click)="updateProfileImage(currentUser);">Update Profile Image</button>
+
+  <h3 #displayName matLine (blur)="updateDisplayName(currentUser, displayName.innerText)" contenteditable> {{currentUser.displayName}} </h3>
+  <p matLine>
+    <span> {{currentUser.email}} </span>
+  </p>
+  <p matLine #sms (blur)="updateSMS(currentUser, sms.innerText)" contenteditable> {{(currentUser.phoneNumber)?currentUser.phoneNumber:'enter sms number'}} 
+  </p>
+  <p matLine>
+    <span class="demo-2">{{currentUser.date | date:'fullDate'}}</span>
+  </p>
+
+  <span>
+  <h2 id="showseats" (click)="currentTab='seats'">Seats</h2>
+  <h2 id="showstars" (click)="currentTab='stars'">Stars</h2>
+  <h2 id="showusers" (click)="currentTab='users'">Users</h2>
+  </span>
+
+  <ul id="seatlist" *ngIf="currentTab=='seats'">
+    <li *ngFor="let seat of currentUser.seats"> {{ getKey(seat).date }}
+        <h4 *ngFor="let game of getKey(seat)"> {{ game.seat }} | {{game.date}} | {{game.away.split('/')[1]}} </h4>
+    </li>
+  </ul>
+
+  <ul id="starlist" *ngIf="currentTab=='stars'">
+    <li *ngFor="let item of currentUser.star | keyvalue">
+      <div *ngFor="let game of getGame(item)">
+        <h4> {{game?.date}} | {{game.away?.split('/')[1]}} </h4>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<mat-list id="userlist" *ngIf="currentTab=='users'">
+  <div *ngFor="let user of users | async">
+    <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
+      <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
+      [letter]="user.displayName.charAt(0)"></app-avatar>
+      <h3 matLine> {{user.displayName}} </h3>
+      <p matLine>
+        <span> {{user.email}} </span>
+      </p>
+      <p matLine>
+        <span class="demo-2">{{user.date | date:'fullDate'}}</span>
+      </p>
+    </mat-list-item>
+  </div>
+</mat-list> -->
