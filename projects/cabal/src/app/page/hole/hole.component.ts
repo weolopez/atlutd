@@ -104,6 +104,9 @@ export class HoleComponent implements OnInit {
       score: 5
     }
   ];
+  golfcourse={
+    holes: this.holes
+  }
   g = [
     {
       hole: this.holes
@@ -175,6 +178,9 @@ export class HoleComponent implements OnInit {
     db: AngularFirestore,
     private auth: AuthService
   ) {
+
+    console.log(JSON.stringify(this.holes))
+
     this.users = db.collection('users').valueChanges();
     this.getUser();
     WebcamUtil.getAvailableVideoInputs()
