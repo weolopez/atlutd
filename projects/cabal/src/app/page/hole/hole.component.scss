@@ -3,6 +3,10 @@
     color: #A19060;
 }
 
+.golf_round {
+  width: 100%;
+}
+
 .user {
 
   margin-top: 90px;
@@ -35,17 +39,16 @@
   overflow-x: scroll;
 }
 .hslide {
-  border-right: 1px solid white;
-  padding: 1rem;
   min-width: 100vw;
   height: 100vh;
   scroll-snap-align: start;
-  text-align: center;
-  position: relative;
 }
 
 .hole {
-
+  order: 0;
+  flex: 1 0 auto;
+  align-self: stretch;
+  min-width: 50%;
 }
 #holeNumber {
   background: #80000A;
@@ -58,7 +61,7 @@
   text-align: center;
   width: 200px;
 }
-#flexcontainer {
+.flexcontainer {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -127,8 +130,10 @@
 #userlist {
   list-style: none;
   background: black;
-  margin: 0;
-  margin-left: 7%;
-  padding: 15px;
-  width: 80%;
+  height: 300px;
+  overflow-y: scroll;
+  // margin: 0;
+  // margin-left: 7%;
+  // padding: 15px;
+  // width: 80%;
 }

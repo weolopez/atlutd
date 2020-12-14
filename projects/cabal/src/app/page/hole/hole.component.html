@@ -2,14 +2,42 @@
 <!-- {{g|json}} -->
   <!-- <div class="user" *ngFor="let game of g"> -->
   <main class="slider">
-    <section class="hslide" *ngFor="let hole of holes">
-      <article class="hole flexcontainer">
+    <section class="hslide golf_round flexcontainer" *ngFor="let hole of holes">
+
+      <article class="hole">
         <div id="holeNumber">{{hole.hole}}</div>
-        <div fxLayout="row" fxLayoutAlign="center center" id="flexcontainer">
+        <div class="flexcontainer">
           <div class="par" (click)="hole.score=hole.score-1">{{hole.par}}</div>
           <div class="score" (click)="hole.score=hole.score+1">{{hole.score}}</div>
         </div>
       </article>
+
+      <!-- <article class="hole">
+        <div id="holeNumber">{{hole.hole}}</div>
+        <div class="flexcontainer">
+          <div class="par" (click)="hole.score=hole.score-1">{{hole.par}}</div>
+          <div class="score" (click)="hole.score=hole.score+1">{{hole.score}}</div>
+        </div>
+      </article> -->
+      
+      <article class="hole">
+        <mat-list id="userlist" *ngIf="true">
+          <div *ngFor="let user of users | async">
+            <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
+              <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
+              [letter]="user.displayName.charAt(0)"></app-avatar>
+              <h3 matLine> {{user.displayName}} </h3>
+              <p matLine>
+                <span> {{user.email}} </span>
+              </p>
+              <p matLine>
+                <span class="demo-2">{{user.date | date:'fullDate'}}</span>
+              </p>
+            </mat-list-item>
+          </div>
+        </mat-list> 
+      </article>
+
     </section>
   </main>
 <!-- </div> -->
