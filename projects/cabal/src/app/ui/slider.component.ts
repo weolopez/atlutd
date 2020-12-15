@@ -2,67 +2,71 @@ import { Component, ViewChild, Input } from '@angular/core'
 @Component({
   selector: 'app-slider',
   template: `
-    <div class="slider">
-  <section class="hslide">
-    <h1>Section One</h1>
-  </section>
-  <section class="hslide">
-    <h1>Section Two</h1>
-  </section>
-  <section class="hslide">
-    <h1>Section Three</h1>
-  </section>
-  <section class="hslide">
-    <h1>Section Four</h1>
-  </section>
-  <section class="hslide">
-    <h1>Section Five</h1>
-  </section>
-
+  <div class="container" id="snap-scroll-container">
+  <div class="child">
+      <div class="label"><h1>1</h1></div>
+  </div>
+  <div class="child">
+      <div class="label"><h1>2</h1></div>
+  </div>
+  <div class="child">
+      <div class="label"><h1>3</h1></div>
+  </div>
+  <div class="child">
+      <div class="label"><h1>4</h1></div>
+  </div>
 </div>
             `,
   styles: [`
-html { 
-  font-family: sans-serif;
-  scroll-snap-type: mandatory;
-  scroll-snap-points-y: repeat(100vh);
-  scroll-snap-type: y mandatory;
+ 
+.container {
+  width: 402px;
+  height: 410px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  margin: 10vh auto 0 auto;
 }
 
-/* Although I'm told that html doesn't work in Safari 
-   and body does, so maybe use both? */
-.slider {
-  font-family: sans-serif;
-  scroll-snap-type: x mandatory;  
-  display: flex;
-  -webkit-overflow-scrolling: touch;
-  overflow-x: scroll;
+#snap-scroll-container {
+  -webkit-scroll-snap-type: mandatory;
+  scroll-snap-type: x mandatory;
+  -webkit-scroll-snap-points-x: repeat(100%);
+  scroll-snap-points-x: repeat(100%);
 }
-.hslide {
-  border-right: 1px solid white;
-  padding: 1rem;
-  min-width: 100vw;
-  height: 100vh;
+
+#snap-scroll-container > .child {
   scroll-snap-align: start;
-  text-align: center;
-  position: relative;
 }
-.vslide {border-bottom: 1px solid white;
-  padding: 1rem;
-  height: 100vh;
+
+#snap-scroll-container-coordinates {
+  -webkit-scroll-snap-type: mandatory;
+  scroll-snap-type: x mandatory;
+}
+
+#snap-scroll-container-coordinates > .child {
+  -webkit-scroll-snap-coordinate: 0% 0%;
+  scroll-snap-coordinate: 0% 0%;
   scroll-snap-align: start;
-  text-align: center;
+}
+
+.child {
+  width: 400px;
+  height: 400px;
   position: relative;
-  h1  {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-    color: white;
-    width: 100%;
-    left: 0;
-    font-size: calc(1rem + 3vw);
-  }
+  background-color: #F0F0F0;
+  display: inline-block;
+  margin-right: -4px;
+  border: 1px solid black;
+  -webkit-scroll-snap-coordinate: 0% 0%;
+}
+.label {
+  width: 200px;
+  height: 200px;
+  border-radius: 25%;
+  background-color: white;
+  margin: 100px auto 0 auto;
 }
     `]
 })

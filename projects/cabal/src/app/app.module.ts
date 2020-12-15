@@ -30,7 +30,7 @@ import { ScrollerComponent } from './ui/scroller.component';
 
 @NgModule({
   declarations: [AppComponent, ChatComponent, ScrollerComponent,
-    HomeComponent, AvatarComponent, SliderComponent],
+    HomeComponent, AvatarComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),

@@ -1,48 +1,63 @@
 <!-- <div *ngIf="user | async as currentUser" fxLayout="column" fxLayoutAlign="center center"> -->
 <!-- {{g|json}} -->
-  <!-- <div class="user" *ngFor="let game of g"> -->
-  <main class="slider">
-    <section class="hslide golf_round flexcontainer" *ngFor="let hole of holes">
-
-      <article class="hole">
-        <div id="holeNumber">{{hole.hole}}</div>
-        <div class="flexcontainer">
-          <div class="par" (click)="hole.score=hole.score-1">{{hole.par}}</div>
-          <div class="score" (click)="hole.score=hole.score+1">{{hole.score}}</div>
+<!-- <div class="user" *ngFor="let game of g"> -->
+<main>
+  <section class=" golf_round flexcontainer">
+    <article>
+      <div class="container" id="snap-scroll-container">
+        <div class="child" *ngFor="let h of holes">
+          <div id="holeNumber">{{h.hole}}</div>
+          <div class="flexcontainer">
+            <div class="par" (click)="hole.score=hole.score-1">{{h.par}}</div>
+            <div class="score" (click)="hole.score=hole.score+1">{{h.score}}</div>
+          </div>
         </div>
-      </article>
+      </div>
+    </article>
+    <article>
+      <div class="container" id="snap-scroll-container">
+        <div class="child" *ngFor="let h of holes">
+          <mat-list id="userlist" *ngIf="true">
+            <div *ngFor="let user of users | async">
+              <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
+                <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
+                [letter]="user.displayName.charAt(0)"></app-avatar>
+                <h3 matLine> {{user.displayName}} </h3>
+                <p matLine>
+                  <span> {{user.email}} </span>
+                </p>
+                <p matLine>
+                  <span class="demo-2">{{user.date | date:'fullDate'}}</span>
+                </p>
+              </mat-list-item>
+            </div>
+          </mat-list> 
+        </div>
+      </div>
+    </article>
 
-      <!-- <article class="hole">
+    <!-- <article class="hole">
         <div id="holeNumber">{{hole.hole}}</div>
         <div class="flexcontainer">
           <div class="par" (click)="hole.score=hole.score-1">{{hole.par}}</div>
           <div class="score" (click)="hole.score=hole.score+1">{{hole.score}}</div>
         </div>
       </article> -->
-      
-      <article class="hole">
-        <mat-list id="userlist" *ngIf="true">
-          <div *ngFor="let user of users | async">
-            <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
-              <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
-              [letter]="user.displayName.charAt(0)"></app-avatar>
-              <h3 matLine> {{user.displayName}} </h3>
-              <p matLine>
-                <span> {{user.email}} </span>
-              </p>
-              <p matLine>
-                <span class="demo-2">{{user.date | date:'fullDate'}}</span>
-              </p>
-            </mat-list-item>
-          </div>
-        </mat-list> 
-      </article>
 
-    </section>
-  </main>
+    <!-- <article class="hole">
+        
+      </article> -->
+
+  </section>
+</main>
+
+
+
+
+
 <!-- </div> -->
 
-  <!-- <button matButton *ngIf="webcamImage" id="snap"  (click)="updateProfileImage(currentUser);">Update Profile Image</button>
+<!-- <button matButton *ngIf="webcamImage" id="snap"  (click)="updateProfileImage(currentUser);">Update Profile Image</button>
 
   <h3 #displayName matLine (blur)="updateDisplayName(currentUser, displayName.innerText)" contenteditable> {{currentUser.displayName}} </h3>
   <p matLine>
