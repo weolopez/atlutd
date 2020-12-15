@@ -116,6 +116,9 @@
   list-style: none;
   background: black;
   overflow-y: scroll;
+  justify-content: space-around;
+  align-content: stretch;
+  align-items: center;
 
   height: 97vh;
   @media screen and (orientation:portrait) {
@@ -126,11 +129,35 @@
   // padding: 15px;
   // width: 80%;
 }
+.listitem {
+  height: 75px;
+  margin-bottom: 10px;
+}
+.photo {
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+}
+.userscore {
+  background:#80000A;
+  border-radius: 50%;
+  color: #A19060;
+  font-size: 50px;
+  margin: 10px;
+  object-fit: cover;
+  padding: 5px 0;
+  text-align: center;
+  width: 75px;
+}
 
 article {
   width: 50vw;
 }
-
+@media screen and (orientation:landscape) {
+#hole {
+  transform: translateY(-30px);
+}
+}
 @media screen and (orientation:portrait) {
   article {
     width: 100vw;

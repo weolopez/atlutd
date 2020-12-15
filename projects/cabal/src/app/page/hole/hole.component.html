@@ -3,7 +3,7 @@
 <!-- <div class="user" *ngFor="let game of g"> -->
 <main>
   <section class=" golf_round flexcontainer">
-    <article>
+    <article id="hole">
       <div class="container" id="snap-scroll-container">
         <div class="child" *ngFor="let h of holes">
           <div id="holeNumber">{{h.hole}}</div>
@@ -17,20 +17,21 @@
     <article>
       <div class="container" id="snap-scroll-container">
         <div class="child" *ngFor="let h of holes">
-          <mat-list id="userlist" *ngIf="true">
-            <div *ngFor="let user of users | async">
-              <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
-                <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
-                [letter]="user.displayName.charAt(0)"></app-avatar>
-                <h3 matLine> {{user.displayName}} </h3>
+          <mat-list id="userlist" >
+              <div class="listitem flexcontainer" *ngFor="let user of users | async">
+                <!-- <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
+                [letter]="user.displayName.charAt(0)"></app-avatar> -->
+                <img class="photo" [src]="user.photoURL" >
+                <div class="userscore" (click)="hole.score=hole.score+1">{{h.score}}</div>
+                <div class="userscore" (click)="hole.score=hole.score+1">{{h.score}}</div>
+                <!-- <h3 matLine> {{user.displayName}} </h3>
                 <p matLine>
                   <span> {{user.email}} </span>
                 </p>
                 <p matLine>
                   <span class="demo-2">{{user.date | date:'fullDate'}}</span>
-                </p>
-              </mat-list-item>
-            </div>
+                </p> -->
+              </div>
           </mat-list> 
         </div>
       </div>
