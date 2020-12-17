@@ -2,37 +2,59 @@
 <!-- {{g|json}} -->
 <!-- <div class="user" *ngFor="let game of g"> -->
 <main>
-  <section class=" golf_round flexcontainer">
+  <section *ngIf="golfRoundObs | async as currentRound" class=" golf_round flexcontainer">
     <article id="hole">
-      <div class="container" id="snap-scroll-container">
-        <div class="child" *ngFor="let h of holes">
+      <div class="container" id="snap-scroll-container" (scroll)="onScroll($event)">
+        <div [attr.value]="h.hole" class="child" *ngFor="let h of currentRound.holes">
           <div id="holeNumber">{{h.hole}}</div>
           <div class="flexcontainer">
-            <div class="par" (click)="hole.score=hole.score-1">{{h.par}}</div>
-            <div class="score" (click)="hole.score=hole.score+1">{{h.score}}</div>
+            <div class="par" (click)="changeScore(-1)">{{h.par}}</div>
+            <div class="score" (click)="changeScore(1)">{{getScore(currentUser, currentHole)}}</div>
           </div>
         </div>
       </div>
     </article>
-    <article>
+
+    <article *ngIf="filteredUsersObs | async as filteredUsers">
       <div class="container" id="snap-scroll-container">
-        <div class="child" *ngFor="let h of holes">
+        <div class="child" >
           <mat-list id="userlist" >
-              <div class="listitem flexcontainer" *ngFor="let user of users | async">
-                <!-- <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
-                [letter]="user.displayName.charAt(0)"></app-avatar> -->
+              <div class="listitem flexcontainer" *ngFor="let user of filteredUsers">
                 <img class="photo" [src]="user.photoURL" >
-                <div class="userscore" (click)="hole.score=hole.score+1">{{h.score}}</div>
-                <div class="userscore" (click)="hole.score=hole.score+1">{{h.score}}</div>
-                <!-- <h3 matLine> {{user.displayName}} </h3>
-                <p matLine>
-                  <span> {{user.email}} </span>
-                </p>
-                <p matLine>
-                  <span class="demo-2">{{user.date | date:'fullDate'}}</span>
-                </p> -->
+                <div class="userscore">{{getScore(user, currentHole)}}</div>
+                <div class="userscore">{{getScore(user)}}</div>
               </div>
           </mat-list> 
+        </div>
+      </div>
+    </article>
+  </section>
+
+
+  <section *ngIf="!golfround" class=" golf_round flexcontainer">
+    <article id="hole">
+      <div class="container" id="snap-scroll-container">
+        <div class="child" *ngFor="let golfcourse of golfcourses | async">
+          <div class="golf_course_id">{{golfcourse.id}}</div>
+          <div class="golf_round_members_label">Par: {{getPar(golfcourse)}}</div>
+          <div class="golf_round_members_label">
+            <input #roundName class="golf_round_members_label" type="text" maxlength="16">
+          </div>
+          <div id="go" (click)="newRound(golfcourse, roundName.value)">New</div>
+        </div>
+      </div>
+    </article>
+    <article *ngIf="currentUser" id="hole">
+      <div class="container" id="snap-scroll-container">
+        <div class="child" *ngFor="let g of rounds | async">
+          <div class="golf_course_id">{{g.id}}</div>
+          <div class="golf_round_members_label">Date: {{g.date}}</div>
+          <div class="golf_round_members_label">Par: {{getPar(g)}}</div>
+          <div id="go" style="top: 94px;" [style.background]="(g.members?.includes(currentUser.uid))?'dimgrey':'#80000A'"
+               (click)="join(g)">Join</div>
+          <a [routerLink]="['/hole', g.id]">
+            <div id="go">View</div>
+          </a>
         </div>
       </div>
     </article>
