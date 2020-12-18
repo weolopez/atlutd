@@ -21,6 +21,9 @@ export class AppComponent {
   ) {
     auth.getUser().subscribe(event => {
       this.loggedIn = (!event) ? false : true;
+      this.auth.getUser().subscribe(u=>{
+        console.dir(u);
+      })
       if (event) { 
         auth.updateUserData(event); 
         this.user = event;

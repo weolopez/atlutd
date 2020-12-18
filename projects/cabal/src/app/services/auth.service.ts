@@ -55,7 +55,10 @@ export class AuthService {
 
   private async oAuthLogin(provider) {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
+    const result = await this.updateUserData(credential.user);
+    console.dir(result);
     location.reload();
+
   }
 
   public updateUserData({ uid, email, displayName, photoURL, phoneNumber }) {
@@ -67,11 +70,11 @@ export class AuthService {
         displayName,
         photoURL,
         date,
-        phoneNumber
+        phoneNumber,
+        id: uid
       };
 
     data.date = date;
-
     return userRef.set(data, { merge: true });
   }
 

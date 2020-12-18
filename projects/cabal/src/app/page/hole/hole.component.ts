@@ -63,6 +63,7 @@ export class HoleComponent {
     this.golfround = this.route.snapshot.paramMap.get('golfround');
 
     if (this.golfround) {
+      window.document.title = this.golfround;
       this.golfRoundObs = this.roundCollection.doc(this.golfround).valueChanges();
     } else {
       this.golfcourses = this.golfCourseCollection.valueChanges();
