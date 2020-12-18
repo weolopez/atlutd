@@ -6,7 +6,7 @@
     <article id="hole">
       <div class="container" id="snap-scroll-container" (scroll)="onScroll($event)">
         <div [attr.value]="h.hole" class="child" *ngFor="let h of currentRound.holes">
-          <div id="holeNumber">{{h.hole}}</div>
+          <div id="holeNumber" (click)="viewHole(h)">{{h.hole}}</div>
           <div class="flexcontainer">
             <div class="par" (click)="changeScore(-1)">{{h.par}}</div>
             <div class="score" (click)="changeScore(1)">{{getScore(currentUser, currentHole)}}</div>
@@ -16,7 +16,7 @@
     </article>
 
     <article *ngIf="filteredUsersObs | async as filteredUsers">
-      <div class="container" id="snap-scroll-container">
+      <div *ngIf="!showHole" class="container" id="snap-scroll-container">
         <div class="child" >
           <mat-list id="userlist" >
               <div class="listitem flexcontainer" *ngFor="let user of filteredUsers">
@@ -27,24 +27,26 @@
           </mat-list> 
         </div>
       </div>
+      <!-- <iframe *ngIf="showHole" src="https://www.google.com/maps/d/embed?mid=1oN3xm32Sdhe3b7-5PDCZRBL5sGAWyjC-" width="640" height="480"></iframe> -->
+      <iframe *ngIf="showHole" [src]="currentHoleMap"></iframe>
     </article>
   </section>
 
 
   <section *ngIf="!golfround" class=" golf_round flexcontainer">
-    <article id="hole">
+    <article class="hole">
       <div class="container" id="snap-scroll-container">
         <div class="child" *ngFor="let golfcourse of golfcourses | async">
           <div class="golf_course_id">{{golfcourse.id}}</div>
-          <div class="golf_round_members_label">Par: {{getPar(golfcourse)}}</div>
           <div class="golf_round_members_label">
-            <input #roundName class="golf_round_members_label" type="text" maxlength="16">
+            <input #roundName class="golf_round_members_label" type="text" maxlength="12">
           </div>
+          <div class="golf_round_members_label">Par: {{getPar(golfcourse)}}</div>
           <div id="go" (click)="newRound(golfcourse, roundName.value)">New</div>
         </div>
       </div>
     </article>
-    <article *ngIf="currentUser" id="hole">
+    <article *ngIf="currentUser" class="hole">
       <div class="container" id="snap-scroll-container">
         <div class="child" *ngFor="let g of rounds | async">
           <div class="golf_course_id">{{g.id}}</div>

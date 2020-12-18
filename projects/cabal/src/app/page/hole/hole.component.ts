@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import {DomSanitizer,SafeResourceUrl,} from '@angular/platform-browser';
 
 export interface Item { name: string; }
 @Component({
@@ -13,6 +14,7 @@ export interface Item { name: string; }
   styleUrls: ['./hole.component.scss']
 })
 export class HoleComponent {
+  showHole = false;
   holes;
   golfcourses;
   golfround;
@@ -49,12 +51,14 @@ export class HoleComponent {
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
   usersCollection: any;
+  currentHoleMap: any;
 
 
   constructor(
     private route: ActivatedRoute,
     private db: AngularFirestore,
-    private auth: AuthService
+    private auth: AuthService,
+    public sanitizer:DomSanitizer
   ) {
     this.usersCollection = db.collection('users');
     this.roundCollection = db.collection('golfround');
@@ -208,7 +212,11 @@ export class HoleComponent {
       }
     });
   }
-
+  viewHole(h) {
+    if (!h.map) return
+    this.currentHoleMap = this.sanitizer.bypassSecurityTrustResourceUrl(h.map);
+    this.showHole = !this.showHole;
+  }
 
 
   isScrolledIntoView(el) {
