@@ -1,35 +1,48 @@
 <!-- <div *ngIf="user | async as currentUser" fxLayout="column" fxLayoutAlign="center center"> -->
 <!-- {{g|json}} -->
 <!-- <div class="user" *ngFor="let game of g"> -->
-<main>
+<main *ngIf="user | async as currentUser">
   <section *ngIf="golfRoundObs | async as currentRound" class=" golf_round flexcontainer">
     <article id="hole">
       <div class="container" id="snap-scroll-container" (scroll)="onScroll($event)">
         <div [attr.value]="h.hole" class="child" *ngFor="let h of currentRound.holes">
           <div id="holeNumber" (click)="viewHole(h)">{{h.hole}}</div>
           <div class="flexcontainer">
-            <!-- <div class="par" (click)="changeScore(h, -1)">{{currentHole}}</div> -->
-            <div class="par" (click)="changeScore(h, -1)">{{h.par}}</div>
-            <div class="score" (click)="changeScore(h, 1)">{{getScore( currentUser, h.hole )}}</div>
+            <!-- <div class="par" (click)="changeScore(h, -1, currentUser)">{{currentHole}}</div> -->
+            <div class="par" (click)="changeScore(h, -1, currentUser)">{{currentRound.holes[currentHole-1]?.par}}</div>
+            <div class="score" (click)="changeScore(h, 1, currentUser)">{{getScore( currentUser, h.hole )}}</div>
           </div>
         </div>
       </div>
     </article>
-
     <article *ngIf="filteredUsersObs | async as filteredUsers">
+
       <div *ngIf="!showHole" class="container" id="snap-scroll-container">
         <div class="child" >
           <mat-list id="userlist" >
               <div class="listitem flexcontainer" *ngFor="let user of filteredUsers">
-                <img class="photo" [src]="user.photoURL" >
+                <img (click)="switchUser(user.id, currentUser.uid)" class="photo" [src]="user.photoURL" >
                 <div class="userscorehole">{{getScore(user, currentHole)}}</div>
                 <div class="userscore">{{getScore(user)}}</div>
               </div>
           </mat-list> 
         </div>
       </div>
-      <!-- <iframe *ngIf="showHole" src="https://www.google.com/maps/d/embed?mid=1oN3xm32Sdhe3b7-5PDCZRBL5sGAWyjC-" width="640" height="480"></iframe> -->
-      <iframe *ngIf="showHole" [src]="currentHoleMap"></iframe>
+
+      <div *ngIf="showHole" >
+        <div *ngIf="showWebcam" fxLayout="column" fxLayoutAlign="center center">
+          <webcam id="camera" [height]="200" [width]="200" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
+            [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)"></webcam>
+          <br />
+          <button matButton id="snap"  (click)="triggerSnapshot();">Take A Snapshot</button>
+        </div>
+        <img [height]="200" [width]="200" *ngIf="!showWebcam" (click)="showWebcam=!showWebcam" matListAvatar
+        [src]="(webcamImage) ? webcamImage : currentUser.photoURL" alt="...">
+     
+        <!-- <iframe *ngIf="!showWebcam" [src]="currentHoleMap"></iframe> -->
+      </div>
+
     </article>
   </section>
 
@@ -54,7 +67,7 @@
           <div class="golf_round_members_label">Date: {{g.date}}</div>
           <div class="golf_round_members_label">Par: {{getPar(g)}}</div>
           <div id="go" style="top: 94px;" [style.background]="(g.members?.includes(currentUser.uid))?'dimgrey':'#80000A'"
-               (click)="join(g)">Join</div>
+               (click)="join(g, currentUser)">Join</div>
           <a [routerLink]="['/hole', g.id]">
             <div id="go">View</div>
           </a>
@@ -62,73 +75,6 @@
       </div>
     </article>
 
-    <!-- <article class="hole">
-        <div id="holeNumber">{{hole.hole}}</div>
-        <div class="flexcontainer">
-          <div class="par" (click)="hole.score=hole.score-1">{{hole.par}}</div>
-          <div class="score" (click)="hole.score=hole.score+1">{{hole.score}}</div>
-        </div>
-      </article> -->
-
-    <!-- <article class="hole">
-        
-      </article> -->
 
   </section>
 </main>
-
-
-
-
-
-<!-- </div> -->
-
-<!-- <button matButton *ngIf="webcamImage" id="snap"  (click)="updateProfileImage(currentUser);">Update Profile Image</button>
-
-  <h3 #displayName matLine (blur)="updateDisplayName(currentUser, displayName.innerText)" contenteditable> {{currentUser.displayName}} </h3>
-  <p matLine>
-    <span> {{currentUser.email}} </span>
-  </p>
-  <p matLine #sms (blur)="updateSMS(currentUser, sms.innerText)" contenteditable> {{(currentUser.phoneNumber)?currentUser.phoneNumber:'enter sms number'}} 
-  </p>
-  <p matLine>
-    <span class="demo-2">{{currentUser.date | date:'fullDate'}}</span>
-  </p>
-
-  <span>
-  <h2 id="showseats" (click)="currentTab='seats'">Seats</h2>
-  <h2 id="showstars" (click)="currentTab='stars'">Stars</h2>
-  <h2 id="showusers" (click)="currentTab='users'">Users</h2>
-  </span>
-
-  <ul id="seatlist" *ngIf="currentTab=='seats'">
-    <li *ngFor="let seat of currentUser.seats"> {{ getKey(seat).date }}
-        <h4 *ngFor="let game of getKey(seat)"> {{ game.seat }} | {{game.date}} | {{game.away.split('/')[1]}} </h4>
-    </li>
-  </ul>
-
-  <ul id="starlist" *ngIf="currentTab=='stars'">
-    <li *ngFor="let item of currentUser.star | keyvalue">
-      <div *ngFor="let game of getGame(item)">
-        <h4> {{game?.date}} | {{game.away?.split('/')[1]}} </h4>
-      </div>
-    </li>
-  </ul>
-</div>
-
-
-<mat-list id="userlist" *ngIf="currentTab=='users'">
-  <div *ngFor="let user of users | async">
-    <mat-list-item *ngIf="!currentUser || user.uid !== currentUser.uid">
-      <app-avatar matListAvatar class="item" (click)="switchUser(user.id)" [img]="user.photoURL" 
-      [letter]="user.displayName.charAt(0)"></app-avatar>
-      <h3 matLine> {{user.displayName}} </h3>
-      <p matLine>
-        <span> {{user.email}} </span>
-      </p>
-      <p matLine>
-        <span class="demo-2">{{user.date | date:'fullDate'}}</span>
-      </p>
-    </mat-list-item>
-  </div>
-</mat-list> -->

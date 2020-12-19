@@ -24,12 +24,12 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AvatarComponent } from './ui/avatar.component';
 import { SliderComponent } from './ui/slider.component';
-import { ScrollerComponent } from './ui/scroller.component';
+import { WebCamComponent } from './ui/webcam.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, ChatComponent, ScrollerComponent,
+  declarations: [AppComponent, ChatComponent, WebCamComponent,
     HomeComponent, AvatarComponent],
   imports: [
     BrowserModule, BrowserAnimationsModule,

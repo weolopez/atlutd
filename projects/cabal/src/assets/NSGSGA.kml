@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>NSGSGA</name>
+	<gx:CascadingStyle kml:id="__managed_style_1E016FE27617AB92CD6D">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>2</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_2D6AB80D5C17AB92CD6D">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>3</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<displayMode>hide</displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_038FF025EC17AB92CD6D">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1E016FE27617AB92CD6D</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2D6AB80D5C17AB92CD6D</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="0D37BB58BF17AB92CD6D">
+		<name>Hole 1 Tee</name>
+		<LookAt>
+			<longitude>-84.26135708746902</longitude>
+			<latitude>33.82924835773726</latitude>
+			<altitude>313.682626967062</altitude>
+			<heading>43.65032484789295</heading>
+			<tilt>49.76018162320162</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>80.99390656992</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_038FF025EC17AB92CD6D</styleUrl>
+		<Point>
+			<coordinates>-84.26132005872324,33.82917574760675,322.7641094268863</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0E5FEFAAF217AB94590F">
+		<name>Hole 1 Fairway</name>
+		<Camera>
+			<gx:ViewerOptions>
+				<gx:option name="streetview"></gx:option>
+				<gx:streetViewPanoId>1oOpoEkbjaiup3AMcsZJaA</gx:streetViewPanoId>
+			</gx:ViewerOptions>
+			<longitude>-84.26114138866308</longitude>
+			<latitude>33.82926151406053</latitude>
+			<altitude>315.5560508174981</altitude>
+			<heading>353.9876663481405</heading>
+			<tilt>83.7023215079865</tilt>
+			<roll>0</roll>
+			<gx:fovy>59.99999996344546</gx:fovy>
+			<altitudeMode>absolute</altitudeMode>
+		</Camera>
+		<styleUrl>#__managed_style_038FF025EC17AB92CD6D</styleUrl>
+		<LineString>
+			<coordinates>
+				-84.2613106253027,33.82918127925905,314.3094033145387 -84.26114721015779,33.82959620784529,311.8460447125848 
+			</coordinates>
+		</LineString>
+	</Placemark>
+	<Placemark id="058DF31AC917AB93DB47">
+		<name>Hole 1</name>
+		<Camera>
+			<gx:ViewerOptions>
+				<gx:option name="streetview"></gx:option>
+				<gx:streetViewPanoId>Lahtga5bx2ZkIyqqAu73ow</gx:streetViewPanoId>
+			</gx:ViewerOptions>
+			<longitude>-84.26122963129573</longitude>
+			<latitude>33.82966220989012</latitude>
+			<altitude>313.7642517085731</altitude>
+			<heading>167.9794579808701</heading>
+			<tilt>80.93285092343964</tilt>
+			<roll>0</roll>
+			<gx:fovy>59.99999999999999</gx:fovy>
+			<altitudeMode>absolute</altitudeMode>
+		</Camera>
+		<styleUrl>#__managed_style_038FF025EC17AB92CD6D</styleUrl>
+		<Point>
+			<coordinates>-84.26115652817481,33.82958752187299,312.2191059806965</coordinates>
+		</Point>
+	</Placemark>
+</Document>
+</kml>

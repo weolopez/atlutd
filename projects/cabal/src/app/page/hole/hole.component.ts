@@ -23,7 +23,7 @@ export class HoleComponent {
   currentUser: any;
   user: Observable<any>;
   roundCollection: any;
-  currentHole: any;
+  currentHole=1;
   golfCourseCollection: any;
   golfRoundObs: any;
   filteredUsersObs: Observable<any>;
@@ -91,12 +91,14 @@ export class HoleComponent {
     }
 
     this.users = this.usersCollection.valueChanges();
-    this.getUser().subscribe(u => { this.currentUser = u });
+    this.getUser();
+    // this.getUser().subscribe(u => { this.currentUser = u });
 
     WebcamUtil.getAvailableVideoInputs()
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
+
     db.collection('games').valueChanges().subscribe(g => {
       this.games = g;
     });
@@ -116,6 +118,7 @@ export class HoleComponent {
   }
   getUser() {
     this.user = this.auth.getUser();
+    this.user.subscribe()
     return this.user;
   }
   getKey(seat) {
@@ -133,7 +136,8 @@ export class HoleComponent {
     let game = this.games.filter(game => game.id == gameId)
     return game;
   }
-  switchUser(id) {
+  switchUser(id, root) {
+    if (this.auth.root != "yLWEBMNYfleyhc4mG7aDPhSHSYe2") return;
     this.auth.switchUser(id);
     this.getUser();
   }
@@ -154,9 +158,9 @@ export class HoleComponent {
     this.roundCollection.doc(name)
       .set(round);
   }
-  join(g) {
+  join(g, currentUser) {
     g.members = (g.members) ? g.members : [];
-    if (g.members.includes(this.currentUser.uid)) return;
+    if (g.members.includes(currentUser.uid)) return;
     this.user.subscribe(u => {
       g.members.push(u.uid);
       u.golfrounds = (u.golfrounds) ? u.golfrounds : {};
@@ -172,8 +176,6 @@ export class HoleComponent {
     })
   }
   getScore(user, currentHole) {
-
-    user = (user) ? user : this.currentUser;
     if (!user) return 0;
     if (!user.golfrounds) return 0;
     let score = user.golfrounds[this.golfround].score;
@@ -188,13 +190,13 @@ export class HoleComponent {
       return s;
     } 
   }
-  changeScore(h, change) {
+  changeScore(h, change, currentUser) {
     this.currentHole = h.hole;
     if (!this.currentHole) alert("bam");
-    if (!this.currentUser.golfrounds[this.golfround].score[this.currentHole])
-    this.currentUser.golfrounds[this.golfround].score[this.currentHole]=1;
-    this.currentUser.golfrounds[this.golfround].score[this.currentHole] += change;
-    this.usersCollection.doc(this.currentUser.uid).update(this.currentUser);
+    if (!currentUser.golfrounds[this.golfround].score[this.currentHole])
+    currentUser.golfrounds[this.golfround].score[this.currentHole]=1;
+    currentUser.golfrounds[this.golfround].score[this.currentHole] += change;
+    this.usersCollection.doc(currentUser.uid).update(currentUser);
   }
   onScroll(event) {
     let t = event.currentTarget;
@@ -216,21 +218,15 @@ export class HoleComponent {
     });
   }
   viewHole(h) {
-    if (!h.map) return
-    this.currentHoleMap = this.sanitizer.bypassSecurityTrustResourceUrl(h.map);
+    if (!h.map) {
+      this.showWebcam = true; 
+    } else {
+      this.currentHoleMap = this.sanitizer.bypassSecurityTrustResourceUrl(h.map);
+    }
     this.showHole = !this.showHole;
+
   }
 
-
-  isScrolledIntoView(el) {
-    if (!el) return false;
-    var rect = el.getBoundingClientRect();
-    var elemTop = rect.top;
-    var elemBottom = rect.bottom;
-
-    var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
-    return isVisible;
-  }
 
   public triggerSnapshot(): void {
     this.trigger.next();

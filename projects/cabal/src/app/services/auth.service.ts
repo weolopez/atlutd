@@ -10,15 +10,18 @@ import {
 
 import { Observable, of } from 'rxjs';
 import { switchMap, first, map, tap } from 'rxjs/operators';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+
   switchUser(id: any) {
     this.manualUserId = id;
     this.manualUser$=this.afs.doc('users/'+id).valueChanges().pipe(
       tap(u=>this.manualUser = u)
     );
   }
+  root: string;
   user$: Observable<any>;
   userId: string;
   manualUser$: Observable<any>;
@@ -32,6 +35,7 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
+          this.root = user.uid;
           this.userId = user.uid;
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges().pipe(
             tap()); // this.updateUserData(u)));
