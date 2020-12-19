@@ -172,9 +172,10 @@ export class HoleComponent {
     })
   }
   getScore(user, currentHole) {
+
     user = (user) ? user : this.currentUser;
     if (!user) return 0;
-
+    if (!user.golfrounds) return 0;
     let score = user.golfrounds[this.golfround].score;
 
     if  (currentHole) {
@@ -182,13 +183,14 @@ export class HoleComponent {
     } else {
       let s = 0;
       Object.keys(score).forEach(k=> {
-        s += score[k];
+        s = s + score[k];
       })
       return s;
     } 
   }
-  changeScore(change) {
-    if (!this.currentHole) this.currentHole = 1;
+  changeScore(h, change) {
+    this.currentHole = h.hole;
+    if (!this.currentHole) alert("bam");
     if (!this.currentUser.golfrounds[this.golfround].score[this.currentHole])
     this.currentUser.golfrounds[this.golfround].score[this.currentHole]=1;
     this.currentUser.golfrounds[this.golfround].score[this.currentHole] += change;
@@ -207,8 +209,9 @@ export class HoleComponent {
         k[key]=Math.abs(parentRec[key]-rect[key]);
       }
       let h = element.getAttribute('value');
-      if (k['left'] < 500) {
-        this.currentHole = h-1;
+      // console.log(k['left']);
+      if (k['left'] < 5) {
+        this.currentHole = h;
       }
     });
   }

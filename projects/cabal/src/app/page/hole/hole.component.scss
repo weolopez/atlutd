@@ -140,9 +140,20 @@
   width: 75px;
 }
 .userscore {
-  background:#80000A;
+  background: #A19060;
   border-radius: 50%;
-  color: #A19060;
+  color: black;
+  font-size: 50px;
+  margin: 10px;
+  object-fit: cover;
+  padding: 5px 0;
+  text-align: center;
+  width: 75px;
+}
+.userscorehole {
+  background: #A19060;
+  border-radius: 50%;
+  color: #80000A;
   font-size: 50px;
   margin: 10px;
   object-fit: cover;

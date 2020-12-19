@@ -8,8 +8,9 @@
         <div [attr.value]="h.hole" class="child" *ngFor="let h of currentRound.holes">
           <div id="holeNumber" (click)="viewHole(h)">{{h.hole}}</div>
           <div class="flexcontainer">
-            <div class="par" (click)="changeScore(-1)">{{h.par}}</div>
-            <div class="score" (click)="changeScore(1)">{{getScore(currentUser, currentHole)}}</div>
+            <!-- <div class="par" (click)="changeScore(h, -1)">{{currentHole}}</div> -->
+            <div class="par" (click)="changeScore(h, -1)">{{h.par}}</div>
+            <div class="score" (click)="changeScore(h, 1)">{{getScore( currentUser, h.hole )}}</div>
           </div>
         </div>
       </div>
@@ -21,7 +22,7 @@
           <mat-list id="userlist" >
               <div class="listitem flexcontainer" *ngFor="let user of filteredUsers">
                 <img class="photo" [src]="user.photoURL" >
-                <div class="userscore">{{getScore(user, currentHole)}}</div>
+                <div class="userscorehole">{{getScore(user, currentHole)}}</div>
                 <div class="userscore">{{getScore(user)}}</div>
               </div>
           </mat-list> 
