@@ -9,11 +9,11 @@ import {DomSanitizer,SafeResourceUrl,} from '@angular/platform-browser';
 
 export interface Item { name: string; }
 @Component({
-  selector: 'app-hole',
-  templateUrl: './hole.component.html',
-  styleUrls: ['./hole.component.scss']
+  selector: 'app-golfcourse',
+  templateUrl: './golfcourse.component.html',
+  styleUrls: ['./golfcourse.component.scss']
 })
-export class HoleComponent {
+export class GolfCourseComponent {
   showHole = false;
   holes;
   golfcourses;
@@ -33,6 +33,12 @@ export class HoleComponent {
   holeImage: any;
   golfcourse: any;
   showWebcam: boolean;
+
+  longitude;// = '33.83022440672791%2C';
+  latitude;// = '84.26114365958082';
+
+  public z = '18';
+  public map;// = `https://www.google.com/maps/d/u/0/embed?mid=1oN3xm32Sdhe3b7-5PDCZRBL5sGAWyjC-&ll=${this.longitude}-${this.latitude}&z=${this.z}`;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +79,7 @@ export class HoleComponent {
       window.document.title = this.golfround;
 
     } 
-    
+    this.getCurrentLocation();
   }
 
   //depricated... use observables
@@ -196,5 +202,18 @@ export class HoleComponent {
   changeURL(i, course) {
     course.holes[this.currentHole].image = i;
     this.golfcourse.set(course)
+  }
+
+  getCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.map = `https://www.google.com/maps/d/u/0/embed?mid=1oN3xm32Sdhe3b7-5PDCZRBL5sGAWyjC-&ll=${this.latitude}-${this.longitude}&z=${this.z}`;
+      });
+    }
+    else {
+      alert("Geolocation is not supported by this browser.");
+    }
   }
 }

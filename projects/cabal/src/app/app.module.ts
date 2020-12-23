@@ -23,14 +23,15 @@ import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AvatarComponent } from './ui/avatar.component';
-import { SliderComponent } from './ui/slider.component';
-import { WebCamComponent } from './ui/webcam.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, ChatComponent, WebCamComponent,
-    HomeComponent, AvatarComponent],
+
+  declarations: [
+    AppComponent, ChatComponent,
+    HomeComponent, AvatarComponent
+  ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
