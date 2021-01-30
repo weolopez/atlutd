@@ -16,8 +16,13 @@
     <article *ngIf="true" class="hole">
 
       <div *ngIf="true" class="container" >
-        <iframe [src]="getUrl(map)"></iframe>
-
+        <!-- <iframe [src]="getUrl(map)"></iframe> -->
+        
+        <agm-map [disableDefaultUI]="false"  [zoom]="18" [latitude]="latitude" [longitude]="longitude"
+        #agmMap>
+        <agm-drawing-manager (polygonComplete)="polygonCreated($event)" [drawingControl]="managerOptions.drawingControl" [drawingControlOptions]="managerOptions.drawingControlOptions"
+          [polygonOptions]='managerOptions.polygonOptions' [drawingMode]='managerOptions.drawingMode'>
+        </agm-drawing-manager></agm-map>
         <!-- <app-webcam *ngIf="!currentHoleMap"  (urlChange)="changeURL($event, currentRound)" 
         urlImage="{{ (currentRound.holes[this.currentHole].image) ? currentRound.holes[this.currentHole].image : 'http://via.placeholder.com/640x360'}}"></app-webcam> -->
         <!-- [src]="getUrl(currentRound.holes[this.currentHole].map)"></iframe> -->

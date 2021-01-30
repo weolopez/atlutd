@@ -23,8 +23,7 @@ import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AvatarComponent } from './ui/avatar.component';
-
-
+// import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
 
@@ -48,8 +47,13 @@ import { AvatarComponent } from './ui/avatar.component';
     MatIconModule,
     FlexLayoutModule,
     AngularFireAuthModule,
-    AngularFireStorageModule,
+    AngularFireStorageModule
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+// ,
+//     AgmCoreModule.forRoot({
+//           apiKey: 'AIzaSyC9FMeiidIyqt-2t3mMHzP5dsQWW6OPWWY'
+//         })

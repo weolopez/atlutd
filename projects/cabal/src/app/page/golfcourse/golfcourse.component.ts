@@ -2,10 +2,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { AuthService } from '../../services/auth.service';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import {DomSanitizer,SafeResourceUrl,} from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
 export interface Item { name: string; }
 @Component({
@@ -14,6 +15,30 @@ export interface Item { name: string; }
   styleUrls: ['./golfcourse.component.scss']
 })
 export class GolfCourseComponent {
+
+  polygon: any;
+  managerOptions = {
+    drawingControl: true,
+    drawingControlOptions: {
+      drawingModes: ['polygon']
+    },
+    polygonOptions: {
+      draggable: true,
+      editable: true
+    },
+    drawingMode: "polygon"
+  };
+
+  options: any = {
+    lat: 33.5362475,
+    lng: -111.9267386,
+    zoom: 10,
+    fillColor: '#DC143C',
+    draggable: true,
+    editable: true,
+    visible: true
+  };
+
   showHole = false;
   holes;
   golfcourses;
@@ -40,13 +65,19 @@ export class GolfCourseComponent {
   public z = '18';
   public map;// = `https://www.google.com/maps/d/u/0/embed?mid=1oN3xm32Sdhe3b7-5PDCZRBL5sGAWyjC-&ll=${this.longitude}-${this.latitude}&z=${this.z}`;
 
+  apiLoaded: Observable<boolean>;
   constructor(
+    httpClient: HttpClient,
     private route: ActivatedRoute,
     private db: AngularFirestore,
     private auth: AuthService,
     public sanitizer:DomSanitizer
   ) {
-
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE', 'callback')
+    .pipe(
+      map(() => true),
+      catchError(() => of(false)),
+    );
       
     this.user =  this.auth.getUser();
     this.filteredUsersObs =  db.collection('users').valueChanges()
@@ -216,4 +247,75 @@ export class GolfCourseComponent {
       alert("Geolocation is not supported by this browser.");
     }
   }
+
+  polygonCreated($event) {
+
+    if (this.polygon) {
+      this.polygon.setMap(null);
+    }
+    this.polygon = $event;
+    this.addPolygonChangeEvent(this.polygon);
+    google.maps.event.addListener(this.polygon, 'coordinates_changed', function (index, obj) {
+      // Polygon object: yourPolygon
+      console.log('coordinates_changed');
+    });
+
+  }
+
+  getPaths() {
+    console.log("get path");
+    if (this.polygon) {
+      const vertices = this.polygon.getPaths().getArray()[0];
+      let paths = [];
+      vertices.getArray().forEach(function (xy, i) {
+        // console.log(xy);
+        let latLng = {
+          lat: xy.lat(),
+          lng: xy.lng()
+        };
+        paths.push(JSON.stringify(latLng));
+      });
+      return paths;
+    }
+    return [];
+  }
+
+  addPolygonChangeEvent(polygon) {
+    var me = polygon,
+      isBeingDragged = false,
+      triggerCoordinatesChanged = function () {
+        // Broadcast normalized event
+        google.maps.event.trigger(me, 'coordinates_changed');
+      };
+
+    // If  the overlay is being dragged, set_at gets called repeatedly,
+    // so either we can debounce that or igore while dragging,
+    // ignoring is more efficient
+    google.maps.event.addListener(me, 'dragstart', function () {
+      isBeingDragged = true;
+    });
+
+    // If the overlay is dragged
+    google.maps.event.addListener(me, 'dragend', function () {
+      triggerCoordinatesChanged();
+      isBeingDragged = false;
+    });
+
+    // Or vertices are added to any of the possible paths, or deleted
+    var paths = me.getPaths();
+    paths.forEach(function (path, i) {
+      google.maps.event.addListener(path, "insert_at", function () {
+        triggerCoordinatesChanged();
+      });
+      google.maps.event.addListener(path, "set_at", function () {
+        if (!isBeingDragged) {
+          triggerCoordinatesChanged();
+        }
+      });
+      google.maps.event.addListener(path, "remove_at", function () {
+        triggerCoordinatesChanged();
+      });
+    });
+  };
+
 }
