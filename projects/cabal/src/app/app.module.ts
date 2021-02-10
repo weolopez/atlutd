@@ -23,6 +23,7 @@ import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AvatarComponent } from './ui/avatar.component';
+import { ChessboardModule } from 'ng2-chessboard';
 
 
 
@@ -49,6 +50,7 @@ import { AvatarComponent } from './ui/avatar.component';
     FlexLayoutModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
+    ChessboardModule
   ],
   bootstrap: [AppComponent]
 })

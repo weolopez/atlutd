@@ -1,0 +1,31 @@
+<main>
+
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+    integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
+ 
+
+  <article #box style="background-color: aqua;overflow-x: scroll;">
+    <ng2-chessboard #board
+  [(position)]="position">
+</ng2-chessboard>
+  </article>
+  <!-- 
+    
+  [orientation]="orientation"
+  [showNotation]="showNotation"
+  [draggable]="draggable"
+  [animation]="animation"
+  (change)="onChange($event)"
+  (dragStart)="onDragStart($event)"
+  (dragMove)="onDragMove($event)"
+  (drop)="onDrop($event)"
+  (snapbackEnd)="onSnapbackEnd($event)"
+  (moveEnd)="onMoveEnd($event)"
+    <article #box style="background-color: greenyellow;">
+    <div class="hand">
+      <img id="card" *ngFor="let card of hand; let i = index " [style.width]="auto"
+        [style.height]="getCardWidth(box.clientHeight, box.clientHeight, hand.length)"
+        [style.margin-left]="box.clientHeight/10*i+'px'" [src]="getUrl(card)">
+    </div>
+  </article> -->
+</main>

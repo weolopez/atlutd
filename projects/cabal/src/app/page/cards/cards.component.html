@@ -1,0 +1,17 @@
+<main>
+  <article #box style="background-color: aqua;overflow-x: scroll;">
+    <div class="hand">
+      <!-- [style.height]="box.clientHeight/2+'px'" -->
+      <img id="card" *ngFor="let card of hand; let i = index " [style.width]="auto"
+        [style.height]="getCardWidth(box.clientHeight, box.clientHeight, hand.length)"
+        [style.margin-left]="box.clientHeight/10*i+'px'" [src]="getUrl(card)">
+    </div>
+  </article>
+  <!-- <article #box style="background-color: greenyellow;">
+    <div class="hand">
+      <img id="card" *ngFor="let card of hand; let i = index " [style.width]="auto"
+        [style.height]="getCardWidth(box.clientHeight, box.clientHeight, hand.length)"
+        [style.margin-left]="box.clientHeight/10*i+'px'" [src]="getUrl(card)">
+    </div>
+  </article> -->
+</main>
