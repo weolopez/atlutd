@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UserRoutingModule } from './hole-routing.module';
-import { HoleComponent } from './hole.component';
+import { UserRoutingModule } from './golfcourse-routing.module';
+import { GolfCourseComponent } from './golfcourse.component';
 import {MatListModule} from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {WebcamModule} from 'ngx-webcam';
@@ -12,9 +12,7 @@ import { SliderComponent } from '../../ui/slider.component';
 import { WebCamComponent } from '../../ui/webcam.component';
 @NgModule({
   declarations: [
-    HoleComponent, 
-    SliderComponent,
-    WebCamComponent
+    GolfCourseComponent
   ],
   imports: [
     CommonModule,
@@ -26,4 +24,4 @@ import { WebCamComponent } from '../../ui/webcam.component';
     WebcamModule
   ]
 })
-export class HoleModule { }
+export class GolfCourseModule { }

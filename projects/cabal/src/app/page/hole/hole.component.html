@@ -1,14 +1,11 @@
-<!-- <div *ngIf="user | async as currentUser" fxLayout="column" fxLayoutAlign="center center"> -->
-<!-- {{g|json}} -->
-<!-- <div class="user" *ngFor="let game of g"> -->
+
 <main *ngIf="user | async as currentUser">
-  <section *ngIf="golfRoundObs | async as currentRound" class=" golf_round flexcontainer">
+  <section *ngIf="golfcourseObs | async as currentRound" class=" golf_round flexcontainer">
     <article id="hole">
       <div class="container" id="snap-scroll-container" (scroll)="onScroll($event)">
         <div [attr.value]="h.hole" class="child" *ngFor="let h of currentRound.holes">
           <div id="holeNumber" (click)="viewHole(h)">{{h.hole}}</div>
           <div class="flexcontainer">
-            <!-- <div class="par" (click)="changeScore(h, -1, currentUser)">{{currentHole}}</div> -->
             <div class="par" (click)="changeScore(h, -1, currentUser)">{{currentRound.holes[currentHole-1]?.par}}</div>
             <div class="score" (click)="changeScore(h, 1, currentUser)">{{getScore( currentUser, h.hole )}}</div>
           </div>
@@ -27,25 +24,16 @@
               </div>
           </mat-list> 
         </div>
-      </div>
-
-      <div *ngIf="showHole" >
-        <div *ngIf="showWebcam" fxLayout="column" fxLayoutAlign="center center">
-          <webcam id="camera" [height]="200" [width]="200" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
-            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
-            [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)"></webcam>
-          <br />
-          <button matButton id="snap"  (click)="triggerSnapshot();">Take A Snapshot</button>
         </div>
-        <img [height]="200" [width]="200" *ngIf="!showWebcam" (click)="showWebcam=!showWebcam" matListAvatar
-        [src]="(webcamImage) ? webcamImage : currentUser.photoURL" alt="...">
-     
-        <!-- <iframe *ngIf="!showWebcam" [src]="currentHoleMap"></iframe> -->
+      <div *ngIf="showHole" class="container" >
+        <app-webcam *ngIf="!currentHoleMap"  (urlChange)="changeURL($event, currentRound)" 
+        urlImage="{{ (currentRound.holes[this.currentHole].image) ? currentRound.holes[this.currentHole].image : 'http://via.placeholder.com/640x360'}}"></app-webcam>
+        <iframe *ngIf="currentHoleMap" 
+        [src]="getUrl(currentRound.holes[this.currentHole].map)"></iframe>
       </div>
 
     </article>
   </section>
-
 
   <section *ngIf="!golfround" class=" golf_round flexcontainer">
     <article class="hole">
@@ -65,7 +53,7 @@
         <div class="child" *ngFor="let g of rounds | async">
           <div class="golf_course_id">{{g.id}}</div>
           <div class="golf_round_members_label">Date: {{g.date}}</div>
-          <div class="golf_round_members_label">Par: {{getPar(g)}}</div>
+          <div class="golf_round_members_label">Course: {{g.name}}</div>
           <div id="go" style="top: 94px;" [style.background]="(g.members?.includes(currentUser.uid))?'dimgrey':'#80000A'"
                (click)="join(g, currentUser)">Join</div>
           <a [routerLink]="['/hole', g.id]">
@@ -74,7 +62,5 @@
         </div>
       </div>
     </article>
-
-
   </section>
 </main>

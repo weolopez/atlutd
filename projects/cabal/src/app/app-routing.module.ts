@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./page/hole/hole.module').then(m => m.HoleModule),
     canActivate: [AuthGuard]
   },
+  { path: 'golfcourse',
+    loadChildren: () => import('./page/golfcourse/golfcourse.module').then(m => m.GolfCourseModule),
+    canActivate: [AuthGuard]
+  },
   { path: 'user',
     loadChildren: () => import('./page/user/user.module').then(m => m.UserModule),
     canActivate: [AuthGuard]
