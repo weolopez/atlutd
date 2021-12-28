@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ServiceModule } from '../../services/service.module';
+import { AvatarModule } from '../../ui/avatar.module';
 
 @NgModule({
   declarations: [SeasonComponent],
@@ -20,7 +21,7 @@ import { ServiceModule } from '../../services/service.module';
     MatButtonModule,
     FlexLayoutModule,
     MatSnackBarModule,
-    ServiceModule
+    ServiceModule,AvatarModule
   ]
 })
 export class SeasonModule { }

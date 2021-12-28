@@ -18,19 +18,15 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
-import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AvatarComponent } from './ui/avatar.component';
-
-
 
 @NgModule({
 
   declarations: [
     AppComponent, ChatComponent,
-    HomeComponent, AvatarComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -48,7 +44,7 @@ import { AvatarComponent } from './ui/avatar.component';
     MatIconModule,
     FlexLayoutModule,
     AngularFireAuthModule,
-    AngularFireStorageModule,
+    AngularFireStorageModule
   ],
   bootstrap: [AppComponent]
 })

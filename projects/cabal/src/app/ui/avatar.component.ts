@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core'
+import { Component, ViewChild, Input, NgModule } from '@angular/core'
 @Component({
     selector: 'app-avatar',
     template: `
@@ -42,3 +42,4 @@ import { Component, ViewChild, Input } from '@angular/core'
       @Input('selected2') selected2;
       noImage;
   }
+  
