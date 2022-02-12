@@ -20,7 +20,7 @@
       <!-- <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar> -->
       <button *ngIf="!loggedIn" mat-button (click)="auth.googleSignIn()">Login</button>
       <app-avatar (click)="showUser=!showUser"
-      [img]="user?.photoURL" [letter]="user?.displayName.charAt(0)" *ngIf="loggedIn"></app-avatar>
+      [img]="user?.photoURL" [letter]="user?.displayName.charAt(0)" *ngIf="!loggedIn"></app-avatar>
       <div fxLayout="column" class="showUser" *ngIf="showUser">
         <h2>{{user.displayName}}</h2>
         <button mat-button color="primary" [routerLink]="'/user'" (click)="showUser=!showUser" >Profile</button>
